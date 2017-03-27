@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/jackmellis/vuenit#readme",
   "dependencies": {
-    "vue-inject": "^0.2.1"
+    "vue-inject": "^1.0.0"
   },
   "peerDependencies": {
     "vue": "2.x"
