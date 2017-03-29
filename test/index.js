@@ -1,33 +1,37 @@
+require('browser-env')()['window', 'document'];
 var vuenit = require('../lib');
 var injector = require('vue-inject');
 var mocks = require('jpex-mocks');
 injector.use(mocks);
 
-var http = vuenit.http();
-
-http.when('/api/1').return('returned');
-http.when('post', '/api/2').call(() => 'called');
-http.when('put', /^\/api\/3$/).reject('rejected');
-http.when('post', '/api/3').stop();
 debugger;
-http.otherwise().call(() => 'unknown?');
 
-http.patch('/api/1')
-.then(function (response) {
-  return http.post('/api/2', response);
-})
-.then(function (response) {
-  return http.put('/api/3', response);
-})
-.catch(function (response) {
-  http.when('post', '/api/3').return();
-  return http({ method : 'post', url : '/api/3', data : response});
-})
-.then(function (response) {
-  debugger;
-  return http.get('unknown!');
+var component = {
+  name : 'test-component',
+  props : ['dep1', 'dep2'],
+  template : '<div>My Component <slot></slot></div>',
+  methods : {
+    request(){
+      return this.$http({
+        url : '/api/1'
+      });
+    }
+  }
+};
+var options = {
+  props : {
+    dep1 : 'foo',
+    dep2 : 'bah'
+  },
+  innerHTML : '<span>I am a slot</span>',
+  http : true
+};
+var vm = vuenit.component(component, options);
+
+vm.request().then(function () {
+  console.log('success');
+}, function(err){
+  console.log(err);
 });
 
-http.flush();
-
-http.flush();
+vm.$http.flush();

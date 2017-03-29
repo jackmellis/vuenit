@@ -25,8 +25,8 @@
     "vue": "2.x"
   },
   "devDependencies": {
+    "browser-env": "^2.0.26",
     "jpex-mocks": "^2.0.0",
-    "jsdom-light": "^1.0.2",
-    "vue": "^2.1.10"
+    "vue": "^2.2.6"
   }
 }
