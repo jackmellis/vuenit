@@ -1,44 +1,49 @@
 require('browser-env')()['window', 'document'];
-var vuenit = require('../lib');
+var {component : mockComponent, directive : mockDirective, store : mockStore, http : mockHttp, reactify} = require('../lib');
 var injector = require('vue-inject');
 var mocks = require('jpex-mocks');
 injector.use(mocks);
 var assert = require('assert');
 
-// var component = {
-//   name : 'test-component',
-//   props : ['dep1', 'dep2'],
-//   template : '<div>My Component <slot></slot></div>',
-//   methods : {
-//     request(){
-//       return this.$http({
-//         url : '/api/1'
-//       });
-//     }
-//   }
-// };
-// var options = {
-//   props : {
-//     dep1 : 'foo',
-//     dep2 : 'bah'
-//   },
-//   innerHTML : '<span>I am a slot</span>',
-//   http : true
-// };
-// var vm = vuenit.component(component, options);
-//
-// vm.request().then(function () {
-//   console.log('success');
-// }, function(err){
-//   console.log(err);
-// });
-//
-// vm.$http.flush();
-
 debugger;
 
+var component = {
+  name : 'test-component',
+  props : ['dep1', 'dep2'],
+  template : '<div>My Component <slot></slot></div>',
+  methods : {
+    request(){
+      return this.$http({
+        url : '/api/1'
+      });
+    }
+  }
+};
+var options = {
+  props : {
+    dep1 : 'foo',
+    dep2 : 'bah'
+  },
+  innerHTML : '<span>I am a slot</span>',
+  http : true,
+  store : {
+    users : {
+      users : []
+    }
+  }
+};
+var vm = mockComponent(component, options);
+
+vm.request().then(function () {
+  console.log('success');
+}, function(err){
+  console.log(err);
+});
+
+vm.$http.flush();
+
 // This is what the store should look like:
-var store = vuenit.store({
+var store = mockStore({
   loading : false,
   users : {
     userId : 0,
@@ -48,7 +53,7 @@ var store = vuenit.store({
 
 // or
 
-var store2 = vuenit.store({
+var store2 = mockStore({
   state : {
     loading : false
   },
@@ -87,7 +92,7 @@ var store2 = vuenit.store({
   }
 });
 
-var store3 = vuenit.store({
+var store3 = mockStore({
   unconfigured : {
     foo : 'bah'
   },
@@ -102,6 +107,21 @@ var store3 = vuenit.store({
     }
   }
 });
+
+var reactive = reactify({
+  foo : 'foo',
+  bah : 0
+});
+
+reactive.foo = 'bah';
+reactive.bah++;
+
+var directive = function(el, bound){
+  console.log('Directive called');
+};
+
+var d1 = mockDirective({test : directive});
+var d2 = mockDirective('v-if', {expression : 'x', props : {x : false}});
 
 assert.equal(store.state.loading, false);
 assert.equal(store2.state.loading, false);

@@ -38,7 +38,7 @@ If you pass a function as an injected property, vuenit will assume it is a facto
 ```javascript
 {
   inject : {
-    myFactory : function(){
+    myFactory(){
       return {};
     }
   }
@@ -48,7 +48,7 @@ This also means you can leverage *vue-inject*'s dependency injection:
 ```javascript
 {
   inject : {
-    myFactory : function($timeout, $log){
+    myFactory($timeout, $log){
       return function(m){
         $timeout(() => $log(m), 250);
       };
@@ -56,7 +56,7 @@ This also means you can leverage *vue-inject*'s dependency injection:
   }
 }
 ```
-However, this feature also means that if you want to inject a function into your component, you must wrap it in a function, otherwise it will be invoked as a factory:
+However, this feature also means that if you want to inject a function into your component, you must wrap it in another function, otherwise it will be invoked as a factory:
 ```javascript
 {
   inject : {
@@ -93,7 +93,7 @@ This is an option to set up a fake vuex-style store for the component. This is s
 
 ### http
 `{ http : {} }`  
-Injects an object as $http into the component instance. If set to true, it will create a http instance using `vuenit.http()`.
+Injects an object as $http into the component instance. If set to `true`, it will create a http instance using `vuenit.http()`.
 ```javascript
 {
   http : true
@@ -124,7 +124,7 @@ The *props*, *inject*, and *store* options all become reactive after creating th
 ```javascript
 var vm = vuenit.component(myComponent, options);
 vm.computedFromFoo // 'foo'
-options.foo = 'bah';
+options.store.state.foo = 'bah';
 vm.computedFromFoo // 'bah'
 ```
 
