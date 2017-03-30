@@ -1,6 +1,11 @@
 # vuenit
 Vue Unit Test Helpers
 
+[vuenit.component](#component)
+[vuenit.directive](#directive)
+[vuenit.store](#store)
+[vuenit.http](#http)
+
 ## Component  
 `vuenit.component(componentDefinition, options)`
 The component function creates an instance of a specified component. Plugin values such as $router can be injected in before the component is initialised, and props can also be passed in as if they were real values.  
@@ -130,7 +135,7 @@ vm.computedFromFoo // 'bah'
 
 
 ## Directive
-`vuenit.directive({ directiveName : directiveDefinition }, options)`
+`vuenit.directive({ directiveName : directiveDefinition }, options)`  
 The directive function allows you to test out directives.
 
 In the background it creates a dummy component (a `div` element by default) with the directive applied as an attribute. The component instance is then returned so you can test the effects of the directive on the component (and its html content).  
@@ -142,7 +147,6 @@ This can either be a string, for a globally defined directive. Otherwise it shou
 
 It is possible to supply more than one directive and you can mix definition objects and globally-defined directives. You can even include built-in directives like v-if.  
 
-*Note that the directive name should __not__ include the `v-` prefix.*  
 ```javascript
 vuenit.directive('global-directive');
 
@@ -150,11 +154,13 @@ vuenit.directive({
   'local-directive' : function(el, binding){}
 });
 
-vuenit.directive({
-  'global-directive' : null,
-  'local-directive' : function(el, binding){},
-  'if' : null
-});
+vuenit.directive([
+  'global-directive',
+  'v-if',
+  {
+    'local-directive' : function(el, binding){}
+  }
+]);
 ```
 
 ### options  
@@ -231,7 +237,7 @@ Props to be passed into the component. This will then be available within the `e
 The element to use for the component the directive will be placed on. By default this is a div.  
 
 ### template  
-`{ template : '<v-element v-directive></v-element>' }`
+`{ template : '<v-element v-directive></v-element>' }`  
 It is possible to completely override the component template. Note that the created directive is inserted into the template by adding a `v-directive` attribute on the html.  
 ```javascript
 vuenit.directive('test', { template : '<input v-directive>' });
@@ -354,7 +360,7 @@ store.when('LOADING').throw();
 ## http
 Creates a mock http object. This mimics the pattern of many ajax modules, and *axios* in particular. The idea is that you would inject a $http property into your Vue component and use it to mock ajax requests in your code.
 
-The returned object a callable function that takes a configuration object.
+The returned object is a callable function that takes a configuration object.
 ```javascript
 var $http = vuenit.http();
 $http({
