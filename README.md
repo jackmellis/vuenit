@@ -1,6 +1,11 @@
 # vuenit
 Vue Unit Test Helpers
 
+[![npm version](https://badge.fury.io/js/vuenit.svg)](https://badge.fury.io/js/vuenit)
+[![Build Status](https://travis-ci.org/jackmellis/vuenit.svg?branch=master)](https://travis-ci.org/jackmellis/vuenit)
+[![Code Climate](https://codeclimate.com/github/jackmellis/vuenit/badges/gpa.svg)](https://codeclimate.com/github/jackmellis/vuenit)
+[![Test Coverage](https://codeclimate.com/github/jackmellis/vuenit/badges/coverage.svg)](https://codeclimate.com/github/jackmellis/vuenit/coverage)
+
 [vuenit.component](#component)
 [vuenit.directive](#directive)
 [vuenit.store](#store)
