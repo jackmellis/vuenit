@@ -26,7 +26,7 @@ Props are passed in through an intermediary component. All this means is that if
 ```javascript
 var vm = vuenit.component(component, options);
 
-options.props.myProp = 'changed';
+vm.propsData.myProp = 'changed';
 
 vm.myProp !== 'changed';
 
@@ -34,6 +34,8 @@ vm.$nextTick(() => {
   vm.myProp === 'changed';
 });
 ```
+The returned component instance has a `propsData` property that allow you to change the prop value:
+
 
 ### inject  
 `{ inject : { $router : {}, someService : {} } }`  
@@ -330,7 +332,7 @@ vuenit.store({
 
 Once created, the mock store can be used like the real one. The `commit` and `dispatch` methods will just return a stubbed response rather than throwing an error if the matching mutation/action is not available.
 
-*The map methods (mapActions mapState etc.) of Vuex are not yet tested using vuenit.store*
+*The map methods ({mapState, mapGetters, mapMutations, mapActions}) of Vuex should all work with the vuenit store without any additional steps.*
 
 ### when
 `store.when(commit/action name)`  

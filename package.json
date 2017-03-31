@@ -4,8 +4,22 @@
   "description": "Vue Unit Test Helpers for server-side testing",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "debug": "inspect test/index"
+    "test": "ava",
+    "coverage": "nyc ava",
+    "debug": "inspect test/index",
+    "lint": "eslint lib",
+    "publish-please": "publish-please",
+    "prepublish": "publish-please guard",
+    "lcov-fix": "node node_modules/jpex-build-tools/lcov-fix",
+    "travis-prepublish": "node node_modules/jpex-build-tools/travis-prepublish"
+  },
+  "ava": {
+    "files": "spec/**/*.spec.js",
+    "source": "lib/**/*.js",
+    "require": [
+      "./spec/helpers/setup.js"
+    ],
+    "concurrency": 20
   },
   "repository": {
     "type": "git",
@@ -25,8 +39,16 @@
     "vue": "2.x"
   },
   "devDependencies": {
+    "ava": "^0.18.2",
     "browser-env": "^2.0.26",
+    "eslint": "^3.18.0",
+    "jpex-build-tools": "github:jpex-js/jpex-build-tools",
     "jpex-mocks": "^2.0.0",
-    "vue": "^2.2.6"
+    "module-alias": "^2.0.0",
+    "nyc": "^10.2.0",
+    "publish-please": "^2.3.0",
+    "sinon": "^2.1.0",
+    "vue": "^2.2.6",
+    "vuex": "^2.2.1"
   }
 }

@@ -1,3 +1,9 @@
+spec
+test
+.nycrc
+.travis.yml
+.codeclimate.yml
+.eslintrc.json
 lcov.info
 
 # Logs
