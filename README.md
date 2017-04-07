@@ -92,6 +92,7 @@ However, this feature also means that if you want to inject a function into your
 
 ### store  
 `{ store : {} }`  
+
 This is an option to set up a fake vuex-style store for the component. This is simply a convenience wrapper that uses the `vuenit.store()` function (see below) and adds it into the above *inject* option.  
 ```javascript
 {
@@ -117,6 +118,7 @@ This is an option to set up a fake vuex-style store for the component. This is s
 
 ### http
 `{ http : {} }`  
+
 Injects an object as $http into the component instance. If set to `true`, it will create a http instance using `vuenit.http()`.
 ```javascript
 {
@@ -143,6 +145,8 @@ Set the inner html of the component. This is useful if you want to test a compon
 ```
 
 ### name  
+`{ name : 'my-component' }`
+
 The name of the component. Vuenit requires components to be named. If your component definition does not a have a name property, you can provide one here.  
 
 The `props`, `inject`, and `store` options all become reactive after creating the component, meaning that you can update their values directly and the component instance will update as expected:  
@@ -153,6 +157,45 @@ vm.computedFromFoo // 'foo'
 options.store.state.foo = 'bah';
 vm.computedFromFoo // 'bah'
 ```
+
+### install
+`{ install(Vue, injector){} }`
+
+The component is built using an extended Vue (i.e. with `Vue.extend()`) and an isolated inject (i.e. `injector.spawn()`). The `install` method allows you to configure them both before creating the component.
+```javascript
+vuenit.component(myComponent, {
+  install(Vue, injector){
+    Vue.use(somePlugin);
+    injector.service('myService', /*...*/);
+  }
+});
+```
+
+### components  
+`{ components : { myComponent : '<div/>' } }`
+
+Allows you to replace child components. The components themselves can either be component definitions, or just a string template.
+```javascript
+vuenit.component(c, {
+  components : {
+    componentA : '<div>string template</div>',
+    componentB : {
+      template : '<div>component object</div>'
+    },
+    componentC : true
+  }
+});
+
+vuenit.component(c, {
+  components : ['componentA', 'componentB', 'componentC']
+});
+```
+If you don't provide a string or object, it will default to a `<div></div>` template.
+
+### stubComponents
+`{ stubComponents : true | '<div/>' | {} }`
+
+If true, it will automatically stub all known components. You can specify a template or component definition and this will be used for stubbing components.
 
 
 ## Directive
