@@ -6,25 +6,35 @@ Vue Unit Test Helpers
 [![Code Climate](https://codeclimate.com/github/jackmellis/vuenit/badges/gpa.svg)](https://codeclimate.com/github/jackmellis/vuenit)
 [![Test Coverage](https://codeclimate.com/github/jackmellis/vuenit/badges/coverage.svg)](https://codeclimate.com/github/jackmellis/vuenit/coverage)
 
-[vuenit.component](#component)
-[vuenit.directive](#directive)
-[vuenit.store](#store)
-[vuenit.http](#http)
+- [vuenit.component](#component)  
+- [vuenit.directive](#directive)  
+- [vuenit.store](#store)  
+- [vuenit.http](#http)  
 
 ## Component  
 `vuenit.component(componentDefinition, options)`
+
 The component function creates an instance of a specified component. Plugin values such as $router can be injected in before the component is initialised, and props can also be passed in as if they were real values.  
 
-vuenit will also handle converting `template`s into `render` functions if the component hasn't already been compiled at some point.
+__vuenit__ will also handle converting `template`s into `render` functions if the component hasn't already been compiled at some point.
 
 The function takes two parameters: `Component` and `Options`:  
+
 ### component  
 This can either be a string (the name of a pre-registered component) or a component definition object.
+```javascript
+import component from 'components/myComponent.vue';
+vuenit.component(component);
+
+vuenit.component('my-globally-registered-component');
+```
 
 ### options  
 Options should be an object with the following properties, all of which are optional:  
+
 ### props  
 `{ props : { foo : 'foo', bah : true } }`  
+
 Specify props that should be passed into the component, these should match up to the props used by your component.  
 
 Props are passed in through an intermediary component. All this means is that if you update a prop's value, you will need to wait for Vue's next render cycle before the value is passed into your component:
@@ -39,14 +49,16 @@ vm.$nextTick(() => {
   vm.myProp === 'changed';
 });
 ```
-The returned component instance has a `propsData` property that allow you to change the prop value:
+The component instance has a `propsData` property that allow you to change the prop value.
 
 
 ### inject  
 `{ inject : { $router : {}, someService : {} } }`  
-Properties to inject into the component. These will be attached to the component instance. This uses *vue-inject* to resolve the injected values and attach them during the *beforeCreate* hook.  
 
-If you pass a function as an injected property, vuenit will assume it is a factory function and will return the result of the function:
+Properties to inject into the component. These will be attached to the component instance. This uses [vue-inject](https://www.npmjs.com/package/vue-inject) to resolve the injected values and attach them during the **beforeCreate** hook.  
+
+If you pass a function as an injected property, **vuenit** will assume it is a factory function and will return the result of the function:
+
 ```javascript
 {
   inject : {
@@ -122,6 +134,7 @@ Injects an object as $http into the component instance. If set to `true`, it wil
 
 ### innerHTML  
 `{ innerHTML : '' }`
+
 Set the inner html of the component. This is useful if you want to test a component that has slots in it:  
 ```javascript
 {
@@ -132,7 +145,8 @@ Set the inner html of the component. This is useful if you want to test a compon
 ### name  
 The name of the component. Vuenit requires components to be named. If your component definition does not a have a name property, you can provide one here.  
 
-The *props*, *inject*, and *store* options all become reactive after creating the component, meaning that you can update their values directly and the component instance will update as expected:  
+The `props`, `inject`, and `store` options all become reactive after creating the component, meaning that you can update their values directly and the component instance will update as expected:  
+
 ```javascript
 var vm = vuenit.component(myComponent, options);
 vm.computedFromFoo // 'foo'
@@ -143,6 +157,7 @@ vm.computedFromFoo // 'bah'
 
 ## Directive
 `vuenit.directive({ directiveName : directiveDefinition }, options)`  
+
 The directive function allows you to test out directives.
 
 In the background it creates a dummy component (a `div` element by default) with the directive applied as an attribute. The component instance is then returned so you can test the effects of the directive on the component (and its html content).  
@@ -241,10 +256,12 @@ Props to be passed into the component. This will then be available within the `e
 
 ### element  
 `{ element : 'span' }`  
+
 The element to use for the component the directive will be placed on. By default this is a div.  
 
 ### template  
 `{ template : '<v-element v-directive></v-element>' }`  
+
 It is possible to completely override the component template. Note that the created directive is inserted into the template by adding a `v-directive` attribute on the html.  
 ```javascript
 vuenit.directive('test', { template : '<input v-directive>' });
@@ -252,6 +269,7 @@ vuenit.directive('test', { template : '<input v-directive>' });
 
 ## Store  
 `vuenit.store({})`  
+
 This creates a vuex-style store that is extremely lightweight. The store is intended for injecting into a component, so that you don't have create an entire vux store, with all of its validation and logic, in order to test your component.
 
 The store takes a configuration object as its only parameter. The configuration object can take two forms: *full-featured* and *state-only*. In many cases when unit testing, you won't be too bothered about whether a commit has changed some stateful data, or a dispatch has done anything other than returned a promise; therefore the *state-only* configuration allows you to just quickly spin-up a store with a bare-bones structure.
@@ -382,19 +400,25 @@ http contains a number of methods that will be familiar to most apis:
 
 ### get
 `http.get(url, config)`
+
 ### put
 `http.put(url, data, config)`
+
 ### post
 `http.post(url, data, config)`
+
 ### delete
 `http.delete(url, config)`
+
 ### patch
+
 `http.patch(url, data, config)`
 ### options
 `http.options(url, config)`
 
 ### when
 `http.when([method], [url])`
+
 The when method allows you to define responses for certain calls.
 
 Both the method and url are optional, and can either be a string or a regular expression.
@@ -429,7 +453,7 @@ Set a response for when an unmatched request is received.
 ```javascript
 http.otherwise().reject();
 ```
-This is the same as calling when with no parameters, except that unlike when, it is put at the bottom of the stack.
+This is the same as calling `when` with no parameters, except that unlike when, it is put at the bottom of the stack.
 
 ### strict
 `true` by default. If set, unmatched requests will be rejected with an error. If false, all ummatched requests will just return an empty promise.
