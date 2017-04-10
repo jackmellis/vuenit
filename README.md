@@ -10,6 +10,7 @@ Vue Unit Test Helpers
 - [vuenit.directive](#directive)  
 - [vuenit.store](#store)  
 - [vuenit.http](#http)  
+- [vuenit.cleanUp](#cleanUp)
 
 ## Component  
 `vuenit.component(componentDefinition, options)`
@@ -503,3 +504,13 @@ This is the same as calling `when` with no parameters, except that unlike when, 
 
 ### latestWins
 `true` by default. Set to false to reverse the priority order when multiple responses match a request.
+
+
+
+## cleanUp
+This is a simple function that removes any globally-assigned components and directives from the main Vue object.
+```javascript
+afterEach(() => {
+  vuenit.cleanUp();
+});
+```

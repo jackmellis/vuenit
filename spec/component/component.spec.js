@@ -68,11 +68,17 @@ test('throws if no name defined', function (t) {
 
 test('creates a global component', function (t) {
   let {component, options} = t.context;
-  let vue = require('vue');
-  component.name = 'my-component';
-  vue.component(component.name, component);
-  let vm = vuenit.component('my-component');
+  let inst = options.install;
+  options.install = Vue => {
+    Vue.component('my-component', component);
+    inst(Vue);
+  };
+  let vm = vuenit.component('my-component', options);
+  let html = vm.$el.innerHTML;
+
   t.not(vm, undefined);
+  t.true(html.indexOf('<input type="search"') > -1);
+  t.true(html.indexOf('<code>I am global</code>') > -1);
 });
 
 test('converts template into render', function (t) {
@@ -313,24 +319,6 @@ describe('components', function () {
     t.true(html.indexOf('<input type="search" name="local"') < 0);
     t.true(html.indexOf('<code>I am global</code>') < 0);
     t.true(html.indexOf('<div></div>') > -1);
-  });
-  test.failing('stubs components for a global component', function (t) {
-    let {component, options} = t.context;
-    let globalComponent = {
-      template : '<code>I am global</code>'
-    };
-    options.install = function (Vue) {
-      Vue.component('global-component', globalComponent);
-      Vue.component('my-component', component);
-    };
-    options.components = {
-      localComponent : '<span>stubbed</span>'
-    };
-    let vm = vuenit.component('my-component', options);
-    let html = vm.$el.outerHTML;
-
-    t.true(html.indexOf('<input type="search" name="local"') < 0);
-    t.true(html.indexOf('<span>stubbed</span>') > -1);
   });
 });
 
