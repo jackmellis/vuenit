@@ -1,9 +1,7 @@
-import test from 'ava';
+import test from 'ava-spec';
 import Sinon from 'sinon';
 import injector from 'vue-inject';
 import {store as mock} from '../../lib';
-
-function describe(n, f){f && f();}
 
 test.beforeEach(function (t) {
   let sinon = Sinon.sandbox.create();
@@ -15,7 +13,7 @@ test.afterEach(function (t) {
   t.context.sinon.restore();
 });
 
-describe('state-only', function () {
+test.group('state-only', function (test) {
   test('it creates a store with root state', function (t) {
     let store = mock({
       loading : true,
@@ -69,7 +67,7 @@ describe('state-only', function () {
   });
 });
 
-describe('state', function () {
+test.group('state', function (test) {
   test('it creates a store with root state', function (t) {
     let store = mock({
       state : {
@@ -94,7 +92,7 @@ describe('state', function () {
   });
 });
 
-describe('getters', function () {
+test.group('getters', function (test) {
   test('it creates a store with getters', function (t) {
     let store = mock({
       getters : {
@@ -171,7 +169,7 @@ describe('getters', function () {
   });
 });
 
-describe('mutations', function () {
+test.group('mutations', function (test) {
   test('calls the mutation method', function (t) {
     let spy = t.context.sinon.spy();
 
@@ -239,7 +237,7 @@ describe('mutations', function () {
   });
 });
 
-describe('actions', function () {
+test.group('actions', function (test) {
   test('calls the action method', function (t) {
     let {sinon} = t.context;
 
@@ -371,7 +369,7 @@ describe('actions', function () {
   });
 });
 
-describe('when', function () {
+test.group('when', function (test) {
   function setup(t) {
     let store = mock({
       moduleA : {

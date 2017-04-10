@@ -1,4 +1,4 @@
-import test from 'ava';
+import test from 'ava-spec';
 import vuenit from '../../lib';
 import Sinon from 'sinon';
 
@@ -83,4 +83,33 @@ test('attaches the directive to a custom template', function (t) {
   var html = t.context.el.outerHTML;
 
   t.is(html, '<input>');
+});
+
+test.group('directive config', function (test) {
+  test('directive options inherit config options', function (t) {
+    let {directive, options} = t.context;
+    vuenit.directive.config = { element : 'output' };
+
+    let vm = vuenit.directive(directive, options);
+    let html = t.context.el.outerHTML;
+
+    t.is(html.indexOf('<output>'), 0);
+  });
+  test('specified options still take presidence', function (t) {
+    let {directive, options} = t.context;
+    vuenit.directive.config = {
+      props : {
+        x : 'con',
+        y : 'fig'
+      }
+    };
+
+    let vm = vuenit.directive(directive);
+    t.is(vm.x, 'con');
+    t.is(vm.y, 'fig');
+
+    vm = vuenit.directive(directive, options);
+    t.is(vm.x, 1);
+    t.is(vm.y, 2);
+  });
 });

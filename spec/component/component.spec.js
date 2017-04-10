@@ -1,9 +1,7 @@
-import test from 'ava';
+import test from 'ava-spec';
 import Sinon from 'sinon';
 import vuenit from '../../lib';
 import injector from 'vue-inject';
-
-function describe(n, f) {f && f();}
 
 test.beforeEach(function (t) {
   var sinon = Sinon.sandbox.create();
@@ -52,6 +50,9 @@ test.beforeEach(function (t) {
 
   t.context = {sinon, component, options};
 });
+test.afterEach(function () {
+  delete vuenit.component.config;
+});
 
 test('creates a child component', function (t) {
   let {component, options} = t.context;
@@ -92,7 +93,7 @@ test('converts template into render', function (t) {
   t.is(typeof component.render, 'function');
 });
 
-describe('props', function () {
+test.group('props', function (test) {
   test('passes in props to the component', function (t) {
     let {component, options} = t.context;
     let vm = vuenit.component(component, options);
@@ -133,7 +134,7 @@ describe('props', function () {
   });
 });
 
-describe('inject', function (t) {
+test.group('inject', function (test) {
   test('inject stuff into the instance', function (t) {
     let {component, options} = t.context;
     options.inject = {
@@ -158,7 +159,7 @@ describe('inject', function (t) {
   });
 });
 
-describe('http', function () {
+test.group('http', function (test) {
   test('passes in a http object', function (t) {
     let {component, options} = t.context;
     let http = {};
@@ -177,7 +178,7 @@ describe('http', function () {
   });
 });
 
-describe('store', function () {
+test.group('store', function (test) {
   test('passes in a store', function (t) {
     let {component, options} = t.context;
     options.store = {
@@ -201,7 +202,7 @@ describe('store', function () {
   });
 });
 
-describe('innerHTML', function () {
+test.group('innerHTML', function (test) {
   test('passes in innerHTML for slots', function (t) {
     let {component, options} = t.context;
     component.template = '<div><slot></slot></div>';
@@ -214,7 +215,7 @@ describe('innerHTML', function () {
   });
 });
 
-describe('install', function () {
+test.group('install', function (test) {
   test('is called with local Vue class', function (t) {
     let {sinon, component, options} = t.context;
     let vue;
@@ -241,7 +242,7 @@ describe('install', function () {
   });
 });
 
-describe('components', function () {
+test.group('components', function (test) {
   test('check that local and global components are rendered', function (t) {
     let {component, options} = t.context;
 
@@ -322,7 +323,7 @@ describe('components', function () {
   });
 });
 
-describe('stubcomponents', function () {
+test.group('stubcomponents', function (test) {
   test('stubs all components', function (t) {
     let {component, options} = t.context;
 
@@ -358,5 +359,31 @@ describe('stubcomponents', function () {
     t.true(html.indexOf('<code>I am global</code>') < 0);
     t.true(html.indexOf('<div></div>') > -1);
     t.true(html.indexOf('<span>stubbed</span>') > -1);
+  });
+});
+
+test.group('component config', function (test) {
+  test('component options inherit config options', function (t) {
+    let {component, options} = t.context;
+    vuenit.component.config = options;
+    let vm = vuenit.component(component, { name : 'test-component' });
+
+    t.is(vm.propA, 'A');
+    t.is(vm.propB, 'B');
+  });
+  test('specified options still take presidence', function (t) {
+    let {component, options} = t.context;
+    vuenit.component.config = options;
+    options = {
+      props : {
+        propA : 'Y',
+        propB : 'X'
+      },
+      name : 'test-component'
+    };
+    let vm = vuenit.component(component, options);
+
+    t.is(vm.propA, 'Y');
+    t.is(vm.propB, 'X');
   });
 });

@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "ava": "^0.18.2",
+    "ava-spec": "^1.1.0",
     "browser-env": "^2.0.26",
     "eslint": "^3.18.0",
     "jpex-build-tools": "github:jpex-js/jpex-build-tools",

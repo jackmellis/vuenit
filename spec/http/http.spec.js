@@ -1,8 +1,6 @@
-import test from 'ava';
+import test from 'ava-spec';
 import Sinon from 'sinon';
 import vuenit from '../../lib';
-
-function describe(n, f){f && f();}
 
 test.beforeEach(function (t) {
   let http = vuenit.http();
@@ -14,7 +12,7 @@ test.afterEach(function (t) {
   t.context.sinon.restore();
 });
 
-describe('methods', function(){
+test.group('methods', function(test){
   test('sends a get request', function (t) {
     let {http} = t.context;
     let spy = t.context.spy = t.context.sinon.spy();
@@ -71,7 +69,7 @@ describe('methods', function(){
   });
 });
 
-describe('strict mode', function(){;
+test.group('strict mode', function(test){;
   test('throws an error when no response is found in strict mode', function (t) {
     let {http} = t.context;
 
@@ -103,7 +101,7 @@ describe('strict mode', function(){;
   });
 });
 
-describe('responses', function(){
+test.group('responses', function(test){
   function setup(t){
     t.context.http.when('delete', 'api/1');
     t.context.http.when('get', 'api/1').return('returned');
@@ -146,7 +144,7 @@ describe('responses', function(){
   });
 });
 
-describe('matching', function () {
+test.group('matching', function (test) {
   test('matches on strings', function (t) {
     let {http} = t.context;
     http.when('get', 'api/1');

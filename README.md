@@ -198,6 +198,11 @@ If you don't provide a string or object, it will default to a `<div></div>` temp
 
 If true, it will automatically stub all known components. You can specify a template or component definition and this will be used for stubbing components.
 
+### config
+`vuenit.component.config = { /*...*/ }`  
+
+All of the above options can be set as default options by setting the `config` property on `vuenit.component`.
+
 
 ## Directive
 `vuenit.directive({ directiveName : directiveDefinition }, options)`  
@@ -310,6 +315,11 @@ It is possible to completely override the component template. Note that the crea
 ```javascript
 vuenit.directive('test', { template : '<input v-directive>' });
 ```
+
+### config
+`vuenit.directive.config = { /*...*/ }`  
+
+All of the above options can be set as default options by setting the `config` property on `vuenit.directive`.
 
 ## Store  
 `vuenit.store({})`  
