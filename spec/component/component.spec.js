@@ -387,3 +387,17 @@ test.group('component config', function (test) {
     t.is(vm.propB, 'X');
   });
 });
+
+test.group('augmented properties', function (test) {
+  test('$name returns component name', function (t) {
+    let {component, options} = t.context;
+    let vm = vuenit.component(component, options);
+    t.is(vm.$name, 'test');
+  });
+
+  test('$html returns element html', function (t) {
+    let {component, options} = t.context;
+    let vm = vuenit.component(component, options);
+    t.is(vm.$html, vm.$el.outerHTML);
+  });
+});

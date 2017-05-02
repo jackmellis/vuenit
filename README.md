@@ -203,6 +203,31 @@ If true, it will automatically stub all known components. You can specify a temp
 
 All of the above options can be set as default options by setting the `config` property on `vuenit.component`.
 
+## vm
+The return value is the component instance, so all data, props, computed values, methods, etc. can be accessible directly:
+```js
+const vm = vuenit.component(c);
+c.myProp;
+c.computedValue;
+c.myMethod();
+c.myInjectedObject;
+// Any internal vue variables can also be accessed:
+c.$el.querySelector('div');
+```
+
+The instance is also given a number of additional properties and methods to help testing:
+### $name
+Returns the name of the component.
+```js
+vm.$name === 'MyComponent';
+```
+
+### $html
+Returns the html of the component. This is the equivalent of accessing the component's `$el.outerHTML` property. The property will always return the *current* state of the instance.
+```js
+vm.$html === '<div/>'
+```
+
 
 ## Directive
 `vuenit.directive({ directiveName : directiveDefinition }, options)`  
