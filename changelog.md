@@ -7,6 +7,8 @@
 - `vm.$contains` tests whether a component contains another component or a html element.
 - `slots` option lets you easily insert slot content into a component. This is the equivalent of manually inserting slots with the `innerHTML` property.
 - `on` option lets you add event listeners when creating a component.
+- `stubFilters` flag automatically stubs all *known* filters.
+- `filters` option allows you to stub/mock filters
 
 ## 0.2.0
 - `stubComponents` flag automatically stubs all *known* components  

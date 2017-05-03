@@ -217,6 +217,28 @@ If you don't provide a string or object, it will default to a `<div></div>` temp
 
 If true, it will automatically stub all known components. You can specify a template or component definition and this will be used for stubbing components.
 
+### filters
+`{ filters : { myFilter : v => v } }`
+
+Allows you to replace filters with stubbed values. If set to true, the filter will just return the original value.
+```js
+vuenit.component(c, {
+  filters : {
+    myFilter(v){
+      return v.split('').reverse().join('');
+    },
+    bypassThisFilter : true
+  }
+});
+
+vuenit.component(c, ['myFilter', 'dateFilter']); // will stub both filters
+```
+
+### stubFilters
+`{ stubFilters : true | v => v }`
+
+If true, it will bypass all known filters and just return the original string. Alternatively, you can set a default filter function.
+
 ### on
 `{ on : { eventName : () => {} } }`
 
