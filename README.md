@@ -20,6 +20,14 @@ The component function creates an instance of a specified component. Plugin valu
 
 __vuenit__ will also handle converting `template`s into `render` functions if the component hasn't already been compiled at some point.
 
+*The component method can also be aliased as mockComponent or mount:*
+```js
+import {component, mockComponent, mount} from 'vuenit';
+component(c);
+mockComponent(c);
+mount(c);
+```
+
 The function takes two parameters: `Component` and `Options`:  
 
 ### component  
@@ -332,6 +340,8 @@ The directive function allows you to test out directives.
 
 In the background it creates a dummy component (a `div` element by default) with the directive applied as an attribute. The component instance is then returned so you can test the effects of the directive on the component (and its html content).  
 
+*The directive method can also be aliased as mockDirective*
+
 The function takes two parameters: `Directive` and `Options`:  
 
 ### directive  
@@ -443,7 +453,7 @@ vuenit.directive('test', { template : '<input v-directive>' });
 All of the above options can be set as default options by setting the `config` property on `vuenit.directive`.
 
 ## Store  
-`vuenit.store({})`  
+`vuenit.store({}) | vuenit.mockStore({})`  
 
 This creates a vuex-style store that is extremely lightweight. The store is intended for injecting into a component, so that you don't have create an entire vux store, with all of its validation and logic, in order to test your component.
 
@@ -558,6 +568,7 @@ store.when('LOADING').throw();
 ```
 
 ## http
+`vuenit.http() | vuenit.mockHttp()`
 Creates a mock http object. This mimics the pattern of many ajax modules, and *axios* in particular. The idea is that you would inject a $http property into your Vue component and use it to mock ajax requests in your code.
 
 The returned object is a callable function that takes a configuration object.
