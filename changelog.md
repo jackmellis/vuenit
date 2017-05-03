@@ -9,6 +9,7 @@
 - `on` option lets you add event listeners when creating a component.
 - `stubFilters` flag automatically stubs all *known* filters.
 - `filters` option allows you to stub/mock filters
+- `vuenit.trigger` method allows you trigger dom events.
 
 ## 0.2.0
 - `stubComponents` flag automatically stubs all *known* components  

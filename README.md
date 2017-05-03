@@ -10,7 +10,8 @@ Vue Unit Test Helpers
 - [vuenit.directive](#directive)  
 - [vuenit.store](#store)  
 - [vuenit.http](#http)  
-- [vuenit.cleanUp](#cleanUp)
+- [vuenit.cleanUp](#cleanUp)  
+- [vuenit.trigger](#trigger)  
 
 ## Component  
 `vuenit.component(componentDefinition, options)`
@@ -643,4 +644,15 @@ This is a simple function that removes any globally-assigned components and dire
 afterEach(() => {
   vuenit.cleanUp();
 });
+```
+
+## trigger
+`vuenit.trigger(element | elements | vm, 'eventName' | Event, { arguments })`
+The trigger method allows you to trigger a native DOM event on an element. It accepts either a HTML element, an array of elements, or a component instance. If passed a component instance, it will trigger the event on the instance's root element. The event name can either be a string, or an Event object.
+```js
+vuenit.trigger(vm.$find('button'), 'click');
+
+vuenit.trigger(vm, 'click', { button : 2 });
+
+vuenit.trigger(vm.$find('button-component', new Event('click')));
 ```

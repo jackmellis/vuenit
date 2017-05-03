@@ -254,7 +254,7 @@ vm.$el.querySelector('button').dispatchEvent(new Event('click'));
 
 ### vuenit
 ```js
-vm.$el.querySelector('button').dispatchEvent(new Event('click'));
+vuenit.trigger(vm.$find('button'), 'click');
 ```
 
 ## listen to events
