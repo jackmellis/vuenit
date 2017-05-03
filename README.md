@@ -145,6 +145,25 @@ Set the inner html of the component. This is useful if you want to test a compon
 }
 ```
 
+### slots
+`{ slots : 'default slot' | { slotName : 'html', default : 'default slot' } }`
+
+Allows you to insert slot content into the component.
+```js
+{
+  slots : {
+    header : '<h1>Header</h1>',
+    default : '<div>Body</div>'
+  }
+}
+```
+..is equivalent to..
+```js
+{
+  innerHTML : '<h1 slot="header">Header</h1><div>Body</div>'
+}
+```
+
 ### name  
 `{ name : 'my-component' }`
 

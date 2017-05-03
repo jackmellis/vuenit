@@ -66,3 +66,65 @@ test.group('innerHTML', function (test) {
     t.is(content, '<div><span>Slot</span></div>');
   });
 });
+
+test.group('named slots', function (test) {
+  function setup(t) {
+    let {component, options} = t.context;
+    component.template = `<div><slot name="header"/><slot/><slot name="footer"/></div>`;
+    options.slots = {};
+    return t.context;
+  }
+  test('creates a component with a named slot', function (t) {
+    let {component, options} = setup(t);
+    options.slots = {
+      header : '<h1>Header</h1>'
+    };
+    let vm = vuenit.component(component, options);
+    let expected = '<div><h1>Header</h1></div>';
+    let actual = vm.$html;
+
+    t.is(actual, expected);
+  });
+  test('creates a component with multiple named slots', function (t) {
+    let {component, options} = setup(t);
+    options.slots = {
+      footer : '<div>Footer</div>',
+      header : '<h1>Header</h1>'
+    };
+    let vm = vuenit.component(component, options);
+    let expected = '<div><h1>Header</h1><div>Footer</div></div>';
+    let actual = vm.$html;
+
+    t.is(actual, expected);
+  });
+  test('creates a component with named slots and a default slot', function (t) {
+    let {component, options} = setup(t);
+    options.slots = {
+      footer : '<div>Footer</div>',
+      header : '<h1>Header</h1>',
+      default : '<section>Body</section>'
+    };
+    let vm = vuenit.component(component, options);
+    let expected = '<div><h1>Header</h1><section>Body</section><div>Footer</div></div>';
+    let actual = vm.$html;
+
+    t.is(actual, expected);
+  });
+});
+
+test.group('default slots', function (test) {
+  function setup(t) {
+    let {component, options} = t.context;
+    component.template = `<div><slot name="header"/><slot/><slot name="footer"/></div>`;
+    return t.context;
+  }
+  test('creates a component with a default slot', function (t) {
+    let {component, options} = setup(t);
+    options.slots = '<section>Body</section>';
+    let vm = vuenit.component(component, options);
+    let expected = '<div><section>Body</section></div>';
+    let actual = vm.$html;
+
+    t.is(actual, expected);
+  });
+});

@@ -178,7 +178,9 @@ t.is(vm.foo, 'bah');
 ```js
 const vm = vueUnit.component(c, {
   slots : {
-    header : '<div></div>'
+    header : '<h1>Header</h1>'
+    default : '<div>Body</div>',
+    footer : '<h4>Footer</h4>'
   }
 });
 ```
@@ -186,7 +188,11 @@ const vm = vueUnit.component(c, {
 ### vuenit
 ```js
 const vm = vuenit.component(c, {
-  innerHTML : '<div slot="header"></div>'
+  slots : {
+    header : '<h1>Header</h1>'
+    default : '<div>Body</div>',
+    footer : '<h4>Footer</h4>'
+  }
 });
 ```
 
