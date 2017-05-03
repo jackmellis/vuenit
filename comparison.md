@@ -321,7 +321,7 @@ t.true(vm.contains(Component));
 ???
 
 ### vuenit
-???
+t.true(vm.$contains(Component));
 
 ## contains dom element
 ### avoriaz
@@ -341,7 +341,7 @@ t.truthy(vm.$el.querySelector('.myClass'));
 
 ### vuenit
 ```js
-t.truthy(vm.$el.querySelector('.myClass'));
+t.true(vm.$contains('myClass'));
 ```
 
 ## check component attribute

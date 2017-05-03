@@ -262,6 +262,11 @@ Works just like `$find` except it returns on the first matching object.
 let child = vm.$findOne('childComponent');
 ```
 
+### $contains
+`vm.$contains('componentName' | componentDefinition | '.css-selector')`
+
+Returns `true` or `false` depending on whether the specified matcher exists within the component.
+
 ## Directive
 `vuenit.directive({ directiveName : directiveDefinition }, options)`  
 

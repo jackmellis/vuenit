@@ -7,6 +7,7 @@ test.beforeEach(function (t) {
   var sinon = Sinon.sandbox.create();
 
   var componentC = {
+    name : 'componentC',
     props : ['propValue'],
     template : '<input id="component-c-input" :value="propValue" type="text" class="component-c-input">'
   };
@@ -167,5 +168,46 @@ test.group('find element', function (test) {
     let found = vm.$findOne('.unknown-class');
 
     t.is(found, null);
+  });
+});
+
+test.group('contains component', function (test) {
+  test('returns true if contains component', function (t) {
+    let {component, options} = t.context;
+    let vm = vuenit.component(component, options);
+    let contains = vm.$contains('componentB');
+
+    t.true(contains);
+  });
+  test('returns true if component exists somewhere in the component tree', function (t) {
+    let {component, options, componentC} = t.context;
+    let vm = vuenit.component(component, options);
+    let contains = vm.$contains(componentC);
+
+    t.true(contains);
+  });
+  test('returns false if component does not exist', function (t) {
+    let {component, options} = t.context;
+    let vm = vuenit.component(component, options);
+    let contains = vm.$contains('componentD');
+
+    t.false(contains);
+  });
+});
+
+test.group('contains element', function (test) {
+  test('returns true if contains element', function (t) {
+    let {component, options} = t.context;
+    let vm = vuenit.component(component, options);
+    let contains = vm.$contains('.component-c-input');
+
+    t.true(contains);
+  });
+  test('returns false if does not contain element', function (t) {
+    let {component, options} = t.context;
+    let vm = vuenit.component(component, options);
+    let contains = vm.$contains('.who-bloody-knows');
+
+    t.false(contains);
   });
 });
