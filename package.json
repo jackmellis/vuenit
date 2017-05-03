@@ -20,7 +20,7 @@
     "require": [
       "./spec/helpers/setup.js"
     ],
-    "concurrency": 20
+    "concurrency": 8
   },
   "repository": {
     "type": "git",

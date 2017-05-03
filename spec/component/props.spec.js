@@ -67,7 +67,7 @@ test('has propsData property', function (t) {
 
   t.not(vm.propsData, undefined);
 });
-test('propsData is reactive', function (t) {
+test('propsData is reactive', async function (t) {
   let {component, options} = t.context;
   let vm = vuenit.component(component, options);
 
@@ -83,12 +83,12 @@ test('propsData is reactive', function (t) {
   t.is(vm.propB, 'B');
   t.is(vm.computedFromProps, 'A B');
 
-  return vm.$nextTick().then(function () {
-    t.is(vm.propA, 'x');
-    t.is(vm.propB, 'y');
+  await vm.$nextTick();
 
-    t.is(vm.propA, 'x');
-    t.is(vm.propB, 'y');
-    t.is(vm.computedFromProps, 'x y');
-  });
+  t.is(vm.propA, 'x');
+  t.is(vm.propB, 'y');
+
+  t.is(vm.propA, 'x');
+  t.is(vm.propB, 'y');
+  t.is(vm.computedFromProps, 'x y');
 });

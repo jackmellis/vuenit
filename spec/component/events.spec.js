@@ -55,4 +55,16 @@ test('calls spy when event is emitted from child component', function (t) {
   t.true(spy.called);
 });
 
-test.todo('calls spy with arguments');
+test('calls spy with arguments', function (t) {
+  let {component, sinon, options} = t.context;
+  let spy = sinon.spy();
+  options.on = {
+    'custom-event' : spy
+  };
+  let vm = vuenit.component(component, options);
+  let child = vm.$findOne('child-component');
+
+  child.fireEvent();
+
+  t.true(spy.calledWith('foo'));
+});
