@@ -281,7 +281,10 @@ vm.find(MyComponent);
 ???
 
 ### vuenit
- ???
+```js
+vm.$find(MyComponent);
+vm.$findOne('myComponent');
+```
 
 ## find dom element
 ### avoriaz
@@ -301,7 +304,8 @@ vm.$el.querySelector('.myClass');
 
 ### vuenit
 ```js
-vm.$el.querySelector('.myClass');
+vm.$find('.myClass');
+vm.$findOne('.myClass');
 ```
 
 ## contains component

@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "ava",
+    "watch" : "ava --watch",
     "coverage": "nyc ava",
     "debug": "inspect test/index",
     "lint": "eslint lib",

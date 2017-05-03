@@ -228,6 +228,39 @@ Returns the html of the component. This is the equivalent of accessing the compo
 vm.$html === '<div/>'
 ```
 
+### propsData
+The props that are being passed into the component instance. This essentially exposes the component's parent data and allows you to update prop values on the fly. Vue handles prop changes asynchronously which means that if you change a prop, you must wait until the next render cycle before your component is updated with the new value.
+```js
+vm.propsData.foo = 'bah';
+await vm.$nextTick();
+vm.computedFromFoo === 'bah';
+```
+
+### $find
+`vm.$find('componentName' | componentDefinition | '.css-selector')`  
+
+Searches the component instance and returns an array of either matching components or matching elements.  
+
+To find a component, you can either pass the component name as a string, or a component definition object. The component must have a name property, otherwise it will not be able to find it. Vuenit will automatically set the name property for locally-registered components and stubbed components set with the `components` option. However, it will not do this for nested components.  
+The returned components will all have these augmented properties on them.
+```js
+let child = vm.$find('childComponent')[0];
+let grandchild = child.$find(componentDefinitionObject)[0];
+```
+
+To find an element, pass in any valid css selector. It will return an array of matching elements. The returned elements are just plain DOM objects with no *magical* properties applied:
+```js
+let divs = vm.$find('div');
+let content = divs.map(d => d.innerHTML).join('\n');
+```
+
+### $findOne
+`vm.$findOne('componentName' | componentDefinition | '.css-selector')`
+
+Works just like `$find` except it returns on the first matching object.
+```js
+let child = vm.$findOne('childComponent');
+```
 
 ## Directive
 `vuenit.directive({ directiveName : directiveDefinition }, options)`  
