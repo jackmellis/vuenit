@@ -217,6 +217,22 @@ If you don't provide a string or object, it will default to a `<div></div>` temp
 
 If true, it will automatically stub all known components. You can specify a template or component definition and this will be used for stubbing components.
 
+### on
+`{ on : { eventName : () => {} } }`
+
+Allows you to register event listeners on the component.
+```js
+var vm = vuenit.component(c, {
+  on : {
+    'custom-event' : function(){}
+  }
+});
+// it is easy enough to add more listeners later:
+vm.$on('some-other-event', function(){});
+// and just as easy to emit component events:
+vm.$emit('custom-event');
+```
+
 ### config
 `vuenit.component.config = { /*...*/ }`  
 

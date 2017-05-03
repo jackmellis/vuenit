@@ -272,6 +272,12 @@ vm.$on('customEvent', spy);
 ### vuenit
 ```js
 vm.$on('customEvent', spy);
+// or
+vuenit.component(c, {
+  on : {
+    customEvent : spy
+  }
+});
 ```
 
 ## find child component
