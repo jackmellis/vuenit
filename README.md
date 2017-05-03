@@ -333,6 +333,11 @@ let child = vm.$findOne('childComponent');
 
 Returns `true` or `false` depending on whether the specified matcher exists within the component.
 
+### $create
+`vm.$create()`
+
+Returns a new instance of the component using the same options used to create the current instance.
+
 ## Directive
 `vuenit.directive({ directiveName : directiveDefinition }, options)`  
 

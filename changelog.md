@@ -10,6 +10,7 @@
 - `stubFilters` flag automatically stubs all *known* filters.
 - `filters` option allows you to stub/mock filters
 - `vuenit.trigger` method allows you trigger dom events.
+- `vm.$create` method creates a new instance of a component using the same options as before
 
 ## 0.2.0
 - `stubComponents` flag automatically stubs all *known* components  
