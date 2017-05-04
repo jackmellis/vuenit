@@ -1,4 +1,10 @@
 ## mounting
+### vanilla
+```js
+const Component = Vue.extend(c);
+const vm = new Component();
+```
+
 ### avoriaz
 ```js
 const vm = avoriaz.mount(c);
@@ -22,6 +28,11 @@ const vm = vuenit.component(c);
 ```
 
 ## computed properties
+### vanilla
+```js
+t.is(vm.foo, 'foo');
+```
+
 ### avoriaz
 ```js
 t.is(vm.computed().foo(), 'foo');
@@ -31,16 +42,17 @@ t.is(vm.computed().foo(), 'foo');
 ???
 
 ### vue-unit
-```js
-t.is(vm.foo, 'foo');
-```
+vanilla
 
 ### vuenit
-```js
-t.is(vm.foo, 'foo');
-```
+vanilla
 
 ## methods
+### vanilla
+```js
+t.is(vm.foo(), 'foo');
+```
+
 ### avoriaz
 ```js
 t.is(vm.methods().foo(), 'foo');
@@ -50,16 +62,17 @@ t.is(vm.methods().foo(), 'foo');
 ???
 
 ### vue-unit
-```js
-t.is(vm.foo(), 'foo');
-```
+vanilla
 
 ### vuenit
-```js
-t.is(vm.foo(), 'foo');
-```
+vanilla
 
 ## access data
+### vanilla
+```js
+t.is(vm.foo, 'foo');
+```
+
 ### avoriaz
 ```js
 t.is(vm.data().foo, 'foo');
@@ -69,16 +82,18 @@ t.is(vm.data().foo, 'foo');
 ???
 
 ### vue-unit
-```js
-t.is(vm.foo, 'foo');
-```
+vanilla
 
 ### vuenit
-```js
-t.is(vm.foo, 'foo');
-```
+vanilla
 
 ## update data
+### vanilla
+```js
+vm.foo = 'bah';
+t.is(vm.foo, 'bah');
+```
+
 ### avoriaz
 ```js
 vm.setData({ foo : 'bah' });
@@ -89,18 +104,22 @@ t.is(vm.data().foo, 'bah');
 ???
 
 ### vue-unit
-```js
-vm.foo = 'bah';
-t.is(vm.foo, 'bah');
-```
+vanilla
 
 ### vuenit
-```js
-vm.foo = 'bah';
-t.is(vm.foo, 'bah');
-```
+vanilla
 
 ## set props
+### vanilla
+```js
+const Component = Vue.extend(c);
+const vm = new Component({
+  propsData : {
+    foo : 'bah'
+  }
+});
+```
+
 ### avoriaz
 ```js
 const vm = avoriaz.mount(c, {
@@ -132,6 +151,11 @@ const vm = vuenit.component(c, {
 ```
 
 ## access props
+### vanilla
+```js
+t.is(vm.foo, 'foo');
+```
+
 ### avoriaz
 ```js
 t.is(vm.propsData().foo, 'foo');
@@ -141,16 +165,15 @@ t.is(vm.propsData().foo, 'foo');
 ???
 
 ### vue-unit
-```js
-t.is(vm.foo, 'foo');
-```
+vanilla
 
 ### vuenit
-```js
-t.is(vm.foo, 'foo');
-```
+vanilla
 
 ## update props
+### vanilla
+???
+
 ### avoriaz
 ???
 
@@ -168,6 +191,9 @@ t.is(vm.foo, 'bah');
 ```
 
 ## slots
+### vanilla
+???
+
 ### avoriaz
 ???
 
@@ -197,6 +223,11 @@ const vm = vuenit.component(c, {
 ```
 
 ## component name
+### vanilla
+```js
+t.is(vm.$options.name, 'Foo');
+```
+
 ### avoriaz
 ```js
 t.is(vm.name(), 'Foo');
@@ -206,9 +237,7 @@ t.is(vm.name(), 'Foo');
 ???
 
 ### vue-unit
-```js
-t.is(vm.$options.name, 'Foo');
-```
+vanilla
 
 ### vuenit
 ```js
@@ -216,6 +245,11 @@ t.is(vm.$name, 'Foo');
 ```
 
 ## emit events
+### vanilla
+```js
+vm.$emit('click', {});
+```
+
 ### avoriaz
 ```js
 vm.simulate('click'); // cannot attach a payload...
@@ -227,16 +261,17 @@ vm.trigger('click');
 ```
 
 ### vue-unit
-```js
-vm.$emit('click', {});
-```
+vanilla
 
 ### vuenit
-```js
-vm.$emit('click', {});
-```
+vanilla
 
 ## emit dom events
+### vanilla
+```js
+vm.$el.querySelector('button').dispatchEvent(new Event('click'));
+```
+
 ### avoriaz
 ```js
 vm.find('button')[0].simulate('click');
@@ -248,9 +283,7 @@ vm.trigger('click');
 ```
 
 ### vue-unit
-```js
-vm.$el.querySelector('button').dispatchEvent(new Event('click'));
-```
+vanilla
 
 ### vuenit
 ```js
@@ -258,6 +291,11 @@ vuenit.trigger(vm.$find('button'), 'click');
 ```
 
 ## listen to events
+### vanilla
+```js
+vm.$on('customEvent', spy);
+```
+
 ### avoriaz
  ???
 
@@ -265,9 +303,7 @@ vuenit.trigger(vm.$find('button'), 'click');
 ???
 
 ### vue-unit
-```js
-vm.$on('customEvent', spy);
-```
+vanilla
 
 ### vuenit
 ```js
@@ -281,6 +317,9 @@ vuenit.component(c, {
 ```
 
 ## find child component
+### vanilla
+???
+
 ### avoriaz
 ```js
 vm.find(MyComponent);
@@ -299,6 +338,11 @@ vm.$findOne('myComponent');
 ```
 
 ## find dom element
+### vanilla
+```js
+vm.$el.querySelector('.myClass');
+```
+
 ### avoriaz
 ```js
 vm.find('.myClass');
@@ -310,9 +354,7 @@ vm.find('.myClass');
 ```
 
 ### vue-unit
-```js
-vm.$el.querySelector('.myClass');
-```
+vanilla
 
 ### vuenit
 ```js
@@ -321,6 +363,9 @@ vm.$findOne('.myClass');
 ```
 
 ## contains component
+### vanilla
+???
+
 ### avoriaz
 ```js
 t.true(vm.contains(Component));
@@ -333,9 +378,16 @@ t.true(vm.contains(Component));
 ???
 
 ### vuenit
+```js
 t.true(vm.$contains(Component));
+```
 
 ## contains dom element
+### vanilla
+```js
+t.truthy(vm.$el.querySelector('.myClass'));
+```
+
 ### avoriaz
 ```js
 t.true(vm.contains('.myClass'));
@@ -347,9 +399,7 @@ t.true(vm.contains('.myClass'));
 ```
 
 ### vue-unit
-```js
-t.truthy(vm.$el.querySelector('.myClass'));
-```
+vanilla
 
 ### vuenit
 ```js
@@ -357,6 +407,11 @@ t.true(vm.$contains('myClass'));
 ```
 
 ## check component attribute
+### vanilla
+```js
+t.is(vm.$el.getAttribute('id'), 'foo');
+```
+
 ### avoriaz
 ```js
 t.true(vm.hasAttribute('id', 'foo'));
@@ -366,16 +421,17 @@ t.true(vm.hasAttribute('id', 'foo'));
 ???
 
 ### vue-unit
-```js
-t.is(vm.$el.getAttribute('id'), 'foo');
-```
+vanilla
 
 ### vuenit
-```js
-t.is(vm.$el.getAttribute('id'), 'foo');
-```
+vanilla
 
 ## check dom attribute
+### vanilla
+```js
+t.is(vm.$el.querySelector('.myClass').getAttribute('id'), 'foo');
+```
+
 ### avoriaz
 ```js
 t.true(vm.find('.myClass')[0].hasAttribute('id', 'foo'));
@@ -387,16 +443,19 @@ t.true(vm.find('.myClass')[0].getAttribute('id'), 'foo');
 ```
 
 ### vue-unit
-```js
-t.is(vm.$el.querySelector('.myClass').getAttribute('id'), 'foo');
-```
+vanilla
 
 ### vuenit
 ```js
-t.is(vm.$el.querySelector('.myClass').getAttribute('id'), 'foo');
+t.is(vm.$findOne('.myClass').getAttribute('id'), 'foo');
 ```
 
 ## check component class
+### vanilla
+```js
+t.true(vm.$el.classList.contains('myClass'));
+```
+
 ### avoriaz
 ```js
 t.true(vm.hasClass('myClass'));
@@ -408,16 +467,17 @@ t.true(vm.hasClass('myClass'));
 ```
 
 ### vue-unit
-```js
-t.true(vm.$el.classList.contains('myClass'));
-```
+vanilla
 
 ### vuenit
-```js
-t.true(vm.$el.classList.contains('myClass'));
-```
+vanilla
 
 ## check dom class
+### vanilla
+```js
+t.true(vm.$el.querySelector('.myClass').classList.contains('myClass'));
+```
+
 ### avoriaz
 ```js
 t.true(vm.find('.myClass')[0].hasClass('myClass')); // possibly a redundant test!
@@ -427,16 +487,19 @@ t.true(vm.find('.myClass')[0].hasClass('myClass')); // possibly a redundant test
 ???
 
 ### vue-unit
-```js
-t.true(vm.$el.querySelector('.myClass').classList.contains('myClass'));
-```
+vanilla
 
 ### vuenit
 ```js
-t.true(vm.$el.querySelector('.myClass').classList.contains('myClass'));
+t.true(vm.$findOne('.myClass').classList.contains('myClass'));
 ```
 
 ## check component style
+### vanilla
+```js
+t.is(vm.$el.style.width, '100%');
+```
+
 ### avoriaz
 ```js
 t.true(vm.hasStyle('width', '100%'));
@@ -446,16 +509,17 @@ t.true(vm.hasStyle('width', '100%'));
 ???
 
 ### vue-unit
-```js
-t.is(vm.$el.style.width, '100%');
-```
+vanilla
 
 ### vuenit
-```js
-t.is(vm.$el.style.width, '100%');
-```
+vanilla
 
 ## check dom style
+### vanilla
+```js
+t.is(vm.$el.querySelector('.myClass').style.width, '100%');
+```
+
 ### avoriaz
 ```js
 t.true(vm.find('.myClass').hasStyle('width', '100%'));
@@ -465,16 +529,19 @@ t.true(vm.find('.myClass').hasStyle('width', '100%'));
 ???
 
 ### vue-unit
-```js
-t.is(vm.$el.querySelector('.myClass').style.width, '100%');
-```
+vanilla
 
 ### vuenit
 ```js
-t.is(vm.$el.querySelector('.myClass').style.width, '100%');
+t.is(vm.$findOne('.myClass').style.width, '100%');
 ```
 
 ## check html
+### vanilla
+```js
+t.is(vm.$el.outerHTML, '<div/>');
+```
+
 ### avoriaz
 ```js
 t.is(vm.html(), '<div/>');
@@ -486,16 +553,19 @@ t.is(vm.html(), '<div/>');
 ```
 
 ### vue-unit
-```js
-t.is(vm.$el.outerHTML, '<div/>');
-```
+vanilla
 
 ### vuenit
 ```js
-t.is(vm.$el.outerHTML, '<div/>');
+t.is(vm.$html, '<div/>');
 ```
 
 ## check component matches selector
+# vanilla
+```js
+t.is(vm.$el.tagName, 'DIV');
+```
+
 ### avoriaz
 ```js
 t.true(vm.is('div'));
@@ -507,17 +577,18 @@ t.true(vm.matches('div'));
 ```
 
 ### vue-unit
-```js
-t.is(vm.$el.tagName, 'DIV');
-```
+vanilla
 
 ### vuenit
-```js
-t.is(vm.$el.tagName, 'DIV');
-```
+vanilla
 
 
 ## check component is empty
+### vanilla
+```js
+t.is(vm.$el.children.length, 0);
+```
+
 ### avoriaz
 ```js
 t.true(vm.isEmpty());
@@ -529,16 +600,15 @@ t.true(vm.isEmpty());
 ```
 
 ### vue-unit
-```js
-t.is(vm.$el.children.length, 0);
-```
+vanilla
 
 ### vuenit
-```js
-t.is(vm.$el.children.length, 0);
-```
+vanilla
 
 ## inject dependencies
+### vanilla
+???
+
 ### avoriaz
 ???
 
@@ -555,45 +625,10 @@ const vm = vuenit.component(c, {
 });
 ```
 
-## mock vuex store
-### avoriaz
-```js
-avoriaz.use(vuex);
-const store = new vuex.Store({
-  modules : {
-    user : {
-      state : {},
-      actions : {
-        actionFoo : spy
-      }
-    }
-  }
-});
-const vm = avoriaz.mount(c, {store});
-```
-
-### vue-test
+## mock components
+### vanilla
 ???
 
-### vue-unit
-```js
-
-```
-
-### vuenit
-```js
-const vm = vuenit.component(c, {
-  store : {
-    user : {
-      actions : {
-        actionFoo : spy
-      }
-    }
-  }
-});
-```
-
-## mock components
 ### avoriaz
 ???
 
@@ -610,6 +645,9 @@ var vm = vuenit.component(c, {
 ```
 
 ## shallow render
+### vanilla
+???
+
 ### avoriaz
 ???
 
