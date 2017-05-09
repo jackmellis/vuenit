@@ -14,7 +14,7 @@ Vue Unit Test Helpers
 - [vuenit.trigger](#trigger)  
 
 ## Component  
-`vuenit.component(componentDefinition, options)`
+`vuenit.component(componentDefinition, options)`  
 
 The component function creates an instance of a specified component. Plugin values such as $router can be injected in before the component is initialised, and props can also be passed in as if they were real values.  
 
@@ -26,7 +26,7 @@ import {component, mockComponent, mount} from 'vuenit';
 component(c);
 mockComponent(c);
 mount(c);
-```
+```  
 
 The function takes two parameters: `Component` and `Options`:  
 
@@ -37,7 +37,7 @@ import component from 'components/myComponent.vue';
 vuenit.component(component);
 
 vuenit.component('my-globally-registered-component');
-```
+```  
 
 ### options  
 Options should be an object with the following properties, all of which are optional:  
@@ -58,7 +58,7 @@ vm.myProp !== 'changed';
 vm.$nextTick(() => {
   vm.myProp === 'changed';
 });
-```
+```  
 The component instance has a `propsData` property that allow you to change the prop value.
 
 
@@ -77,7 +77,7 @@ If you pass a function as an injected property, **vuenit** will assume it is a f
     }
   }
 }
-```
+```  
 This also means you can leverage *vue-inject*'s dependency injection:
 ```javascript
 {
@@ -89,7 +89,7 @@ This also means you can leverage *vue-inject*'s dependency injection:
     }
   }
 }
-```
+```  
 However, this feature also means that if you want to inject a function into your component, you must wrap it in another function, otherwise it will be invoked as a factory:
 ```javascript
 {
@@ -98,7 +98,7 @@ However, this feature also means that if you want to inject a function into your
     $http : () => $http // will work
   }
 }
-```
+```  
 
 ### store  
 `{ store : {} }`  
@@ -112,7 +112,7 @@ This is an option to set up a fake vuex-style store for the component. This is s
     ]
   }
 }
-```
+```  
 ...is the equivalent of...  
 ```javascript
 {
@@ -124,7 +124,7 @@ This is an option to set up a fake vuex-style store for the component. This is s
     })
   }
 }
-```
+```  
 
 ### http
 `{ http : {} }`  
@@ -134,7 +134,7 @@ Injects an object as $http into the component instance. If set to `true`, it wil
 {
   http : true
 }
-```
+```  
 ...is the equivalent of...
 ```javascript
 {
@@ -142,20 +142,10 @@ Injects an object as $http into the component instance. If set to `true`, it wil
     $http : () => vuenit.http()
   }
 }
-```
-
-### innerHTML  
-`{ innerHTML : '' }`
-
-Set the inner html of the component. This is useful if you want to test a component that has slots in it:  
-```javascript
-{
-  innerHTML : '<span slot="component-slot>xxx</span>"'
-}
-```
+```  
 
 ### slots
-`{ slots : 'default slot' | { slotName : 'html', default : 'default slot' } }`
+`{ slots : 'default slot' | { slotName : 'html', default : 'default slot' } }`  
 
 Allows you to insert slot content into the component.
 ```js
@@ -165,16 +155,26 @@ Allows you to insert slot content into the component.
     default : '<div>Body</div>'
   }
 }
-```
+```  
 ..is equivalent to..
 ```js
 {
   innerHTML : '<h1 slot="header">Header</h1><div>Body</div>'
 }
-```
+```  
+
+### innerHTML  
+`{ innerHTML : '' }`  
+
+Set the inner html of the component. This is useful if you want to test a component that has slots in it:  
+```javascript
+{
+  innerHTML : '<span slot="component-slot>xxx</span>"'
+}
+```  
 
 ### name  
-`{ name : 'my-component' }`
+`{ name : 'my-component' }`  
 
 The name of the component. Vuenit requires components to be named. If your component definition does not a have a name property, you can provide one here.  
 
@@ -185,10 +185,10 @@ var vm = vuenit.component(myComponent, options);
 vm.computedFromFoo // 'foo'
 options.store.state.foo = 'bah';
 vm.computedFromFoo // 'bah'
-```
+```  
 
 ### install
-`{ install(Vue, injector){} }`
+`{ install(Vue, injector){} }`  
 
 The component is built using an extended Vue (i.e. with `Vue.extend()`) and an isolated inject (i.e. `injector.spawn()`). The `install` method allows you to configure them both before creating the component.
 ```javascript
@@ -198,10 +198,10 @@ vuenit.component(myComponent, {
     injector.service('myService', /*...*/);
   }
 });
-```
+```  
 
 ### components  
-`{ components : { myComponent : '<div/>' } }`
+`{ components : { myComponent : '<div/>' } }`  
 
 Allows you to replace child components. The components themselves can either be component definitions, or just a string template.
 ```javascript
@@ -218,16 +218,16 @@ vuenit.component(c, {
 vuenit.component(c, {
   components : ['componentA', 'componentB', 'componentC']
 });
-```
+```  
 If you don't provide a string or object, it will default to a `<div></div>` template.
 
 ### stubComponents
-`{ stubComponents : true | '<div/>' | {} }`
+`{ stubComponents : true | '<div/>' | {} }`  
 
 If true, it will automatically stub all known components. You can specify a template or component definition and this will be used for stubbing components.
 
 ### filters
-`{ filters : { myFilter : v => v } }`
+`{ filters : { myFilter : v => v } }`  
 
 Allows you to replace filters with stubbed values. If set to true, the filter will just return the original value.
 ```js
@@ -241,15 +241,15 @@ vuenit.component(c, {
 });
 
 vuenit.component(c, ['myFilter', 'dateFilter']); // will stub both filters
-```
+```  
 
 ### stubFilters
-`{ stubFilters : true | v => v }`
+`{ stubFilters : true | v => v }`  
 
 If true, it will bypass all known filters and just return the original string. Alternatively, you can set a default filter function.
 
 ### on
-`{ on : { eventName : () => {} } }`
+`{ on : { eventName : () => {} } }`  
 
 Allows you to register event listeners on the component.
 ```js
@@ -262,7 +262,7 @@ var vm = vuenit.component(c, {
 vm.$on('some-other-event', function(){});
 // and just as easy to emit component events:
 vm.$emit('custom-event');
-```
+```  
 
 ### config
 `vuenit.component.config = { /*...*/ }`  
@@ -279,20 +279,20 @@ c.myMethod();
 c.myInjectedObject;
 // Any internal vue variables can also be accessed:
 c.$el.querySelector('div');
-```
+```  
 
 The instance is also given a number of additional properties and methods to help testing:
 ### $name
 Returns the name of the component.
 ```js
 vm.$name === 'MyComponent';
-```
+```  
 
 ### $html
 Returns the html of the component. This is the equivalent of accessing the component's `$el.outerHTML` property. The property will always return the *current* state of the instance.
 ```js
 vm.$html === '<div/>'
-```
+```  
 
 ### propsData
 The props that are being passed into the component instance. This essentially exposes the component's parent data and allows you to update prop values on the fly. Vue handles prop changes asynchronously which means that if you change a prop, you must wait until the next render cycle before your component is updated with the new value.
@@ -300,7 +300,7 @@ The props that are being passed into the component instance. This essentially ex
 vm.propsData.foo = 'bah';
 await vm.$nextTick();
 vm.computedFromFoo === 'bah';
-```
+```  
 
 ### $find
 `vm.$find('componentName' | componentDefinition | '.css-selector')`  
@@ -312,29 +312,29 @@ The returned components will all have these augmented properties on them.
 ```js
 let child = vm.$find('childComponent')[0];
 let grandchild = child.$find(componentDefinitionObject)[0];
-```
+```  
 
 To find an element, pass in any valid css selector. It will return an array of matching elements. The returned elements are just plain DOM objects with no *magical* properties applied:
 ```js
 let divs = vm.$find('div');
 let content = divs.map(d => d.innerHTML).join('\n');
-```
+```  
 
 ### $findOne
-`vm.$findOne('componentName' | componentDefinition | '.css-selector')`
+`vm.$findOne('componentName' | componentDefinition | '.css-selector')`  
 
 Works just like `$find` except it returns on the first matching object.
 ```js
 let child = vm.$findOne('childComponent');
-```
+```  
 
 ### $contains
-`vm.$contains('componentName' | componentDefinition | '.css-selector')`
+`vm.$contains('componentName' | componentDefinition | '.css-selector')`  
 
 Returns `true` or `false` depending on whether the specified matcher exists within the component.
 
 ### $create
-`vm.$create()`
+`vm.$create()`  
 
 Returns a new instance of the component using the same options used to create the current instance.
 
@@ -368,7 +368,7 @@ vuenit.directive([
     'local-directive' : function(el, binding){}
   }
 ]);
-```
+```  
 
 ### options  
 Options should be an object with the following properties, all of which are optional:  
@@ -378,11 +378,11 @@ The expression to pass into the directive.
 
 ```javascript
 vuenit.directive('test', { expression : '1===1' });
-```
+```  
 would output  
-```
+```  
 v-test="1===1"
-```
+```  
 
 You can use this in conjunction with *props* to use variables as well.  
 ```javascript
@@ -400,7 +400,7 @@ props.y = 2;
 vm.$nextTick(() => {
   vm.$el.outerHTML // would reflect any changes made by the directive
 });
-```
+```  
 
 ### argument  
 Passes an argument into the directive:  
@@ -408,7 +408,7 @@ Passes an argument into the directive:
 vuenit.directive('test', { argument : 'foo' });
 ```  
 would output  
-```
+```  
 v-test:foo
 ```  
 
@@ -419,7 +419,7 @@ Passes modifiers to the directive, this can either be an array or a string.
 vuenit.directive('test', { modifiers : ['foo', 'bah'] });
 ```  
 would output  
-```
+```  
 v-test.foo.bah
 ```  
 
@@ -434,7 +434,7 @@ vuenit.directive({foo, bah}, {
     expression : 'exp'
   }
 });
-```
+```  
 
 ### props  
 Props to be passed into the component. This will then be available within the `expression`.
@@ -450,7 +450,7 @@ The element to use for the component the directive will be placed on. By default
 It is possible to completely override the component template. Note that the created directive is inserted into the template by adding a `v-directive` attribute on the html.  
 ```javascript
 vuenit.directive('test', { template : '<input v-directive>' });
-```
+```  
 
 ### config
 `vuenit.directive.config = { /*...*/ }`  
@@ -478,13 +478,13 @@ vuenit.store({
     }
   }
 });
-```
+```  
 This will create a store with a state property that matches the above definition:
 ```javascript
 store.state.loading // false
 store.state.users.users // []
 store.state.nestedModules.moduleA.foo // 'bah'
-```
+```  
 It will also create a module for *each nested object*. This means the above store would have the following modules:  
 - users  
 - nestedModules  
@@ -518,7 +518,7 @@ vuenit.store({
     }
   }
 });
-```
+```  
 This allows for a much more advanced store, but it requires a lot more setup and can make your tests more complicated. If you find you are having to set up an entire store for your tests, you may want to think about decoupling your code, or just using the real Vuex module instead of a mock one.
 
 ## mixed
@@ -541,27 +541,27 @@ vuenit.store({
     }
   }
 });
-```
+```  
 
 Once created, the mock store can be used like the real one. The `commit` and `dispatch` methods will just return a stubbed response rather than throwing an error if the matching mutation/action is not available.
 
 *The map methods ({mapState, mapGetters, mapMutations, mapActions}) of Vuex should all work with the vuenit store without any additional steps.*
 
 ### when
-`store.when(commit/action name)`  
+`store.when([method], [name])`  
 Allows you to determine a return value or callback function for any dispatch or commit. The method returns an object with the following options:
 
 #### return
 Return a value when a commit or action is received with this name
 ```javascript
 store.when('module/UPDATE').return({});
-```
+```  
 
 #### call
 Call a method. The method receives the payload object as its argument.
 ```javascript
 store.when('module/action').call(payload => {});
-```
+```  
 
 #### stop
 Returns an unresolved promise.
@@ -570,10 +570,20 @@ Returns an unresolved promise.
 Throws an error when the specified commit/action is received.
 ```javascript
 store.when('LOADING').throw();
-```
+```  
+
+#### reject
+Alias for throw.
+
+### otherwise
+`store.otherwise()`  
+Sets a default return value if no other `when` conditions are matched.
+
+
 
 ## http
-`vuenit.http() | vuenit.mockHttp()`
+`vuenit.http() | vuenit.mockHttp()`  
+
 Creates a mock http object. This mimics the pattern of many ajax modules, and *axios* in particular. The idea is that you would inject a $http property into your Vue component and use it to mock ajax requests in your code.
 
 The returned object is a callable function that takes a configuration object.
@@ -584,31 +594,31 @@ $http({
   method : 'post',
   data : {}
 });
-```
+```  
 Upon receiving a request, http checks for a matching response set via the `when` method. If it finds one, the response is returned as a promise, otherwise an error is thrown.
 
 http contains a number of methods that will be familiar to most apis:
 
 ### get
-`http.get(url, config)`
+`http.get(url, config)`  
 
 ### put
-`http.put(url, data, config)`
+`http.put(url, data, config)`  
 
 ### post
-`http.post(url, data, config)`
+`http.post(url, data, config)`  
 
 ### delete
-`http.delete(url, config)`
+`http.delete(url, config)`  
 
 ### patch
 
-`http.patch(url, data, config)`
+`http.patch(url, data, config)`  
 ### options
-`http.options(url, config)`
+`http.options(url, config)`  
 
 ### when
-`http.when([method], [url])`
+`http.when([method], [url])`  
 
 The when method allows you to define responses for certain calls.
 
@@ -620,37 +630,37 @@ The when method returns an object with the following options:
 #### return
 ```javascript
 http.when('get', '/api/1').return({});
-```
+```  
 
 #### call
 ```javascript
 http.when('api/1').call(config => {});
-```
+```  
 
 #### stop
 Returns an unresolved promise.
 ```javascript
 http.when('get', '/api/1').stop();
-```
+```  
 
 #### reject
 Returns a rejected response with the provided value
 ```javascript
 http.when('get', '/api/1').reject(new Error());
-```
+```  
+
+### throw
+Alias for reject
 
 ### otherwise
 Set a response for when an unmatched request is received.
 ```javascript
 http.otherwise().reject();
-```
+```  
 This is the same as calling `when` with no parameters, except that unlike when, it is put at the bottom of the stack.
 
 ### strict
 `true` by default. If set, unmatched requests will be rejected with an error. If false, all ummatched requests will just return an empty promise.
-
-### latestWins
-`true` by default. Set to false to reverse the priority order when multiple responses match a request.
 
 
 
@@ -660,10 +670,10 @@ This is a simple function that removes any globally-assigned components and dire
 afterEach(() => {
   vuenit.cleanUp();
 });
-```
+```  
 
 ## trigger
-`vuenit.trigger(element | elements | vm, 'eventName' | Event, { arguments })`
+`vuenit.trigger(element | elements | vm, 'eventName' | Event, { arguments })`  
 The trigger method allows you to trigger a native DOM event on an element. It accepts either a HTML element, an array of elements, or a component instance. If passed a component instance, it will trigger the event on the instance's root element. The event name can either be a string, or an Event object.
 ```js
 vuenit.trigger(vm.$find('button'), 'click');
@@ -671,4 +681,4 @@ vuenit.trigger(vm.$find('button'), 'click');
 vuenit.trigger(vm, 'click', { button : 2 });
 
 vuenit.trigger(vm.$find('button-component', new Event('click')));
-```
+```  

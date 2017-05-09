@@ -400,6 +400,53 @@ test.group('when', function (test) {
       t.true(spy.called);
     });
   });
+  test('does not trigger if the incorrect method is used', async function (t) {
+    let {store, sinon} = setup(t);
+    let spy1 = sinon.spy(),
+        spy2 = sinon.spy(),
+        spy3 = sinon.spy(),
+        spy4 = sinon.spy();
+
+    store.when('dispatch', 'dispatch').call(spy1);
+    store.when('dispatch', 'COMMIT').call(spy2);
+    store.when('commit', 'dispatch').call(spy3);
+    store.when('commit', 'COMMIT').call(spy4);
+
+    store.commit('COMMIT');
+    await store.dispatch('dispatch');
+
+    t.true(spy1.called);
+    t.false(spy2.called);
+    t.false(spy3.called);
+    t.true(spy4.called);
+  });
+  test('triggers based on regular expression', function (t) {
+    let {store, sinon} = setup(t);
+    let spy = sinon.spy();
+
+    store.when(/.*/, /commit/i).call(spy);
+
+    store.commit('COMMIT');
+    store.commit('commit');
+    store.commit('bob');
+
+    t.true(spy.calledTwice);
+  });
+  test('triggers for all other options', async function (t) {
+    let {store, sinon} = setup(t);
+    let spy1 = sinon.spy(), spy2 = sinon.spy();
+
+    store.when('commit', 'COMMIT').call(spy1);
+    store.otherwise().call(spy2);
+
+    store.commit('COMMIT');
+    store.commit('FOOBAH');
+    await store.dispatch('myDispatch');
+    await store.dispatch('COMMIT');
+
+    t.true(spy1.calledOnce);
+    t.true(spy2.calledThrice);
+  });
   test('returns a value', function (t) {
     let {store} = setup(t);
     store.when('dispatch').return('foo');

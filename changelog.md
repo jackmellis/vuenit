@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0
+- Improved `$store.when` to accept method types (i.e. *commit/dispatch*) as well as adding `$store.otherwise` method. Also accepts regular expressions to match against: e.g. `$store.when('commit', /MYCOMMIT/).return('value')`.
+- Previously, if prop values were not passed into `options.props`, setting `vm.propsData.unsetprop` would not update the component. This has now been fixed.
+
 ## 0.3.0
 - Access component instance's name with `vm.$name` (rather than `vm.$options.name`)  
 - Access component's html content with `vm.$html` (rather than `vm.$el.outerHTML`)
