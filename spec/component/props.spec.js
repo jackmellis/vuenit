@@ -92,3 +92,22 @@ test('propsData is reactive', async function (t) {
   t.is(vm.propB, 'y');
   t.is(vm.computedFromProps, 'x y');
 });
+test('exposes unincluded props', async function (t) {
+  let {component, options} = t.context;
+  component.props.push('propC'); // options.props does not include a propC property
+  let vm = vuenit.component(component, options);
+
+  t.is(vm.propA, 'A');
+  t.is(vm.propB, 'B');
+  t.is(vm.propC, undefined);
+
+  vm.propsData.propA = 'a';
+  vm.propsData.propB = 'b';
+  vm.propsData.propC = 'c';
+
+  await vm.$nextTick();
+
+  t.is(vm.propA, 'a');
+  t.is(vm.propB, 'b');
+  t.is(vm.propC, 'c');
+});
