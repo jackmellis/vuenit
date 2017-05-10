@@ -64,7 +64,7 @@ test('changing route triggers watchers', async t => {
   let {vm, routeWatcher} = t.context;
   vm.$router.push('/users/add');
   await vm.$nextTick();
-  
+
   t.true(routeWatcher.calledOnce);
 });
 
@@ -92,7 +92,6 @@ test('ignores props from router', async t => {
 
 test('transforms props', async t => {
   let {vm} = t.context;
-  debugger;
   vm.$router.push('/users/transform/props/bob');
   await vm.$nextTick();
 

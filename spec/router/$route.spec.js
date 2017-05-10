@@ -50,7 +50,6 @@ test('has the query of the current route', t => {
 });
 
 test('has the params of the current route', t => {
-  debugger;
   let {$route} = vuenit.router('/users/:userId', '/users/4#myid?foo=1&bah=2');
   t.is($route.params.userId, '4');
 });

@@ -60,7 +60,6 @@ test('uses a default filter', function (t) {
 
 test('stubs all filters', function (t) {
   let {component} = t.context;
-  debugger;
   let vm = vuenit.component(component, {
     stubFilters(v){
       return v + 'bah';
