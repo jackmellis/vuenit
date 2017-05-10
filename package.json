@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "ava",
-    "watch" : "ava --watch",
+    "watch": "ava --watch",
     "coverage": "nyc ava",
     "debug": "inspect test/index",
     "lint": "eslint lib",
@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/jackmellis/vuenit#readme",
   "dependencies": {
+    "path-to-regexp": "^1.7.0",
     "vue-inject": "^1.0.0",
     "vue-template-compiler": "^2.2.6"
   },
