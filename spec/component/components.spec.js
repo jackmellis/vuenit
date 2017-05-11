@@ -160,7 +160,6 @@ test.group('stubcomponents', function (test) {
   });
   test('does not stub components that are manually stubbed', function (t) {
     let {component, options} = t.context;
-
     options.stubComponents = true;
     options.components = {};
     options.components.globalComponent = '<span>stubbed</span>';

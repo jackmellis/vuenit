@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1
+- Fixed issues with `stubComponents` option getting transposed by Vue for global components.
+- `stubComponents` default template now has a `<slot>` so it still renders inner html.
+
 ## 0.3.0
 - Access component instance's name with `vm.$name` (rather than `vm.$options.name`)  
 - Access component's html content with `vm.$html` (rather than `vm.$el.outerHTML`)
