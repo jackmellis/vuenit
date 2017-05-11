@@ -41,17 +41,17 @@
     "vue": "2.x"
   },
   "devDependencies": {
-    "ava": "^0.18.2",
+    "ava": "^0.19.1",
     "ava-spec": "^1.1.0",
-    "browser-env": "^2.0.26",
-    "eslint": "^3.18.0",
+    "browser-env": "^2.0.31",
+    "eslint": "^3.19.0",
     "jpex-build-tools": "github:jpex-js/jpex-build-tools",
-    "jpex-mocks": "^2.0.0",
+    "jpex-mocks": "^2.0.2",
     "module-alias": "^2.0.0",
-    "nyc": "^10.2.0",
-    "publish-please": "^2.3.0",
-    "sinon": "^2.1.0",
+    "nyc": "^10.3.2",
+    "publish-please": "^2.3.1",
+    "sinon": "^2.2.0",
     "vue": "^2.2.6",
-    "vuex": "^2.2.1"
+    "vuex": "^2.3.1"
   }
 }
