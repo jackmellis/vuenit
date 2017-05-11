@@ -9,7 +9,7 @@ Vue Unit Test Helpers
 - [vuenit.component](#component)  
 - [vuenit.directive](#directive)  
 - [vuenit.store](#store)  
-- [vuenit.router](#router)
+- [vuenit.router](#router-1)
 - [vuenit.http](#http)  
 - [vuenit.cleanUp](#cleanUp)  
 - [vuenit.trigger](#trigger)  
@@ -148,7 +148,7 @@ Injects an object as $http into the component instance. If set to `true`, it wil
 ### router
 `{ router : {} | [] | true }`
 
-Injects a fake `$route` and `$router` object into the component using the mock [router](#router).
+Injects a fake `$route` and `$router` object into the component using the mock [router](#router-1).
 ```js
 {
   router : true
@@ -656,7 +656,7 @@ The `$route` object contains information about the current route. When the route
 The path to the current route. This includes param values but strips out any query or hash content.
 
 #### fullPath
-`$route.path // '/users/4#my-id?key=value'`  
+`$route.fullPath // '/users/4#my-id?key=value'`  
 The full path including queries and hashes.
 
 #### params
@@ -668,7 +668,7 @@ An object containing route parameters.
 An object containing key-value pairs extracted from the query
 
 #### hash
-`$route.hash // '#my-id'`
+`$route.hash // '#my-id'`  
 If the path contains a hash, this will return the hash part, with the #. Otherwise it will be an empty string.
 
 #### props
@@ -684,7 +684,7 @@ Contains an array containing [route records](#route-record) for all nested path 
 
 #### routes
 `$router.routes // [ { path : '/users' }, { path : ':userId' }, { path : 'edit' } ]`  
-Contains an array containing all [route records](#route-record).
+Returns an array containing all [route records](#route-record).
 
 #### currentRoute
 `$router.currentRoute // { path : /users/4 }`  
