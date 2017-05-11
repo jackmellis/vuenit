@@ -32,7 +32,8 @@ test.beforeEach(t => {
         var userId = route.params.userId;
         var firstChar = userId.charAt(0).toUpperCase();
         return {userId : firstChar};
-      }}
+      }},
+      {path : '/users/has/props/object', props : { userId : 'jimmy' }}
     ],
     props : {
       someProp : 'foo'
@@ -82,6 +83,14 @@ test('accepts props from router', async t => {
   t.is(vm.userId, 'bob');
 });
 
+test('accepts a props object from the router', async t => {
+  let {vm} = t.context;
+  vm.$router.push('/users/has/props/object');
+  await vm.$nextTick();
+
+  t.is(vm.userId, 'jimmy');
+});
+
 test('ignores props from router', async t => {
   let {vm} = t.context;
   vm.$router.push('/users/ignore/props/bob');
@@ -97,5 +106,6 @@ test('transforms props', async t => {
 
   t.is(vm.userId, 'B');
 });
+
 
 test.todo('should $route props override options.props?');
