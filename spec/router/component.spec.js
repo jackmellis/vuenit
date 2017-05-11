@@ -106,6 +106,3 @@ test('transforms props', async t => {
 
   t.is(vm.userId, 'B');
 });
-
-
-test.todo('should $route props override options.props?');

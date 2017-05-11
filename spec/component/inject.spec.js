@@ -73,7 +73,10 @@ test('injects a factory', function (t) {
   let vm = vuenit.component(component, options);
 
   return new Promise(function (resolve) {
-    vm.factory(resolve, 50);
+    vm.factory(() => {
+      t.pass();
+      resolve();
+    }, 50);
   });
 });
 

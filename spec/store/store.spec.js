@@ -275,7 +275,7 @@ test.group('actions', function (test) {
     let store = mock();
 
     return store.dispatch('some/unknown/event').then(() => {
-      // should not reject
+      t.pass();
     });
   });
   test('has access to local state', function (t) {

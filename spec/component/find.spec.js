@@ -70,6 +70,7 @@ test.group('find component', function (test) {
     let vm = vuenit.component(component, options);
     componentA.name = 'componentA';
     let found = vm.$find(componentA);
+    t.is(found.length, 1);
   });
   test('finds a component that is not a direct child', function (t) {
     let {component, options, componentC} = t.context;
@@ -91,6 +92,8 @@ test.group('find component', function (test) {
   test('returns an empty array', function (t) {
     let {component, options} = t.context;
     let vm = vuenit.component(component, options);
+    let found = vm.$find('dont-find-anything-please');
+    t.is(found.length, 0);
   });
   test('augments component with vuenit properties', function (t) {
     let {component, options, componentC} = t.context;

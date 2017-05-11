@@ -149,18 +149,18 @@ test.group('matching', function (test) {
     let {http} = t.context;
     http.when('get', 'api/1');
 
-    return http.get('api/1');
+    return http.get('api/1').then(() => t.pass());
   });
   test('matches on regular expressions', function (t) {
     let {http} = t.context;
     http.when(/get/, /api\/\d/);
 
-    return http.get('api/1');
+    return http.get('api/1').then(() => t.pass());
   });
   test('matches only on url', function (t) {
     let {http} = t.context;
     http.when('api/1');
 
-    return http.get('api/1');
+    return http.get('api/1').then(() => t.pass());
   });
 });
