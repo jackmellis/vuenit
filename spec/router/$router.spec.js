@@ -129,11 +129,11 @@ test('goes to a step in the history', t => {
   $router.push('/users');
   $router.push('/users/add');
 
-  $router.go(0);
+  $router.go(-100);
   t.is($router.currentRoute.path, '/');
   $router.go(2);
   t.is($router.currentRoute.path, '/users/add');
-  $router.go(1);
+  $router.go(-1);
   t.is($router.currentRoute.path, '/users');
 });
 
@@ -153,7 +153,7 @@ test('goes forward in history', t => {
   let {$router} = vuenit.router(['/', '/users', '/users/add']);
   $router.push('/users');
   $router.push('/users/add');
-  $router.go(0);
+  $router.go(-100);
 
   t.is($router.currentRoute.path, '/');
   $router.forward();
@@ -166,11 +166,11 @@ test('replaces current route', t => {
   let {$router} = vuenit.router(['/', '/users', '/users/add']);
   $router.push('/users');
   $router.push('/users/add');
-  $router.go(1);
+  $router.go(-1);
 
   t.is($router.currentRoute.path, '/users');
   $router.replace('/users/add');
-  $router.go(2);
+  $router.go(1);
   t.is($router.currentRoute.path, '/users/add');
   $router.back();
   t.is($router.currentRoute.path, '/users/add'); // used to be /users

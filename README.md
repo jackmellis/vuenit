@@ -9,6 +9,7 @@ Vue Unit Test Helpers
 - [vuenit.component](#component)  
 - [vuenit.directive](#directive)  
 - [vuenit.store](#store)  
+- [vuenit.router](#router)
 - [vuenit.http](#http)  
 - [vuenit.cleanUp](#cleanUp)  
 - [vuenit.trigger](#trigger)  
@@ -101,7 +102,7 @@ However, this feature also means that if you want to inject a function into your
 ```  
 
 ### store  
-`{ store : {} }`  
+`{ store : {} | true }`  
 
 This is an option to set up a fake vuex-style store for the component. This is simply a convenience wrapper that uses the `vuenit.store()` function (see below) and adds it into the above *inject* option.  
 ```javascript
@@ -127,7 +128,7 @@ This is an option to set up a fake vuex-style store for the component. This is s
 ```  
 
 ### http
-`{ http : {} }`  
+`{ http : {} | true }`  
 
 Injects an object as $http into the component instance. If set to `true`, it will create a http instance using `vuenit.http()`.
 ```javascript
@@ -143,6 +144,22 @@ Injects an object as $http into the component instance. If set to `true`, it wil
   }
 }
 ```  
+
+### router
+`{ router : {} | [] | true }`
+
+Injects a fake `$route` and `$router` object into the component using the mock [router](#router).
+```js
+{
+  router : true
+}
+```
+...is the equivalent of...
+```js
+{
+  inject : vuenit.router()
+}
+```
 
 ### slots
 `{ slots : 'default slot' | { slotName : 'html', default : 'default slot' } }`  
@@ -579,6 +596,194 @@ Alias for throw.
 `store.otherwise()`  
 Sets a default return value if no other `when` conditions are matched.
 
+
+## router
+`vuenit.router() | vuenit.mockRouter()`
+
+Creates a mock router that can be injected into a component. It mimics the *vue-router* api without its entire functionality.
+
+The router can be created in a number of ways:
+```js
+// creates a router with a default route of { path : '/' }
+var {$route, $router} = mockRouter();
+```
+```js
+// creates a router with a single route of { path : '/users' }
+var {$route, $router} = mockRouter('/users');
+```
+```js
+// creates a router with two routes: [ { path : '/' }, { path : '/users' }]
+var {$route, $router} = mockRouter(['/', '/users']);
+```
+```js
+// creates the same router as above
+var {$route, $router} = mockRouter([{path : '/'}, {path : '/users'}]);
+```
+
+it is also possible to set an initial route for the router (if omitted, the first route is used):
+```js
+mockRouter(['/', '/users/:userId'], '/users/4');
+```
+or
+```js
+mockRouter({
+  routes : ['/', '/users/:userId'],
+  route : '/users/4'
+});
+```
+the routes can also contain nested routes, just like vue-router:
+```js
+mockRouter([
+  {
+    path : '/users',
+    children : [
+      {
+        path : ':userId',
+        children : ['edit', 'delete']
+      }
+    ]
+  }
+], 'users/4/edit');
+```
+
+The mock router returns a `$route` and `$router` object. The two are interlinked - updating the router affects the route object.
+
+### $route
+The `$route` object contains information about the current route. When the router changes location, the original $route object is updated. Note that `$route` and `$router.currentRoute` will share the same properties but are actually different objects.
+
+#### path
+`$route.path // '/users/4'`  
+The path to the current route. This includes param values but strips out any query or hash content.
+
+#### fullPath
+`$route.path // '/users/4#my-id?key=value'`  
+The full path including queries and hashes.
+
+#### params
+`$route.params // { userId : '4' }`  
+An object containing route parameters.
+
+#### query
+`$route.query // { key : 'value' }`  
+An object containing key-value pairs extracted from the query
+
+#### hash
+`$route.hash // '#my-id'`
+If the path contains a hash, this will return the hash part, with the #. Otherwise it will be an empty string.
+
+#### props
+`$route.props // { propKey : 'propValue' }`  
+If the matched route has a `props` property, this will be an object containing the prop values. If `props` was a function, this will contain the *resolved value of that function*.  
+When used in a component, the `$route.props` values will be passed into the component as props.
+
+#### matched
+`$route.matched // [ { path : '/users' }, { path : ':userId' }, { path : 'edit' } ]`  
+Contains an array containing [route records](#route-record) for all nested path segments for the current route.
+
+### $router
+
+#### routes
+`$router.routes // [ { path : '/users' }, { path : ':userId' }, { path : 'edit' } ]`  
+Contains an array containing all [route records](#route-record).
+
+#### currentRoute
+`$router.currentRoute // { path : /users/4 }`  
+Returns the current [$route](#$route) object.
+
+#### history
+`$router.history // []`  
+The history property is an array of all visited routes. Each array element is a [$route](#$route) object. The history array is used by the navigation methods. Unlike the *real* vue-router, navigating in the mock router does not use the browser API or update the url, it simply updates the history array.
+
+#### addRoutes
+`$router.addRoutes(['/documents'])`  
+Add additional routes to the router. This accepts the same configuration options as the router construction (so a variety of strings, objects, and arrays).
+
+#### push
+`$router.push('/documents')`  
+Pushes a new route to the router. This will update the current route object. The push method can accept either a string path, or a configuration object:
+```js
+$router.push('/my/new/path');
+```
+```js
+$router.push({ path : '/users/bob', query : {}, hash : 'myid' });
+```
+```js
+$router.push({ name : 'my-named-route' });
+```
+
+#### replace
+`$router.replace('/my/new/path')`  
+Similar to `$router.push` except it replaces the current route in the history.
+
+#### go
+`$router.go(3)`  
+Jump to specific point in the history.
+
+#### back
+`$router.back()`  
+Go to the previous route.  
+
+#### forward
+`$router.forward()`  
+Go to the next route
+
+### route record
+A route record is a definition object for each route in the router. It can be accessed via `$router.routes[n]` and `$route.matched[n]`.
+
+#### path
+`route.path // '/users/:userId'`  
+The path of the route.
+
+#### fullPath
+`route.fullPath // '/users/:userId'`  
+The full path of the route, including parent parts:
+```js
+let {$router} = mockRouter([
+  {
+    path : '/users',
+    children : [
+      {
+        path : ':userId',
+        children : [
+          path : 'edit'
+        ]
+      }
+    ]
+  }
+]);
+let route = $router.routes[0].children[0].children[0];
+route.path // 'edit'
+route.fullPath // '/users/:userId/edit'
+```
+
+#### children
+`route.children // []`  
+Returns an array of all child routes. Each child route is also an instance of the route record class. If a route has no children this will be null.
+
+#### props
+`route.props // true | {} | function(){} | false`  
+The props configuration for this route.
+
+#### parent
+`route.parent // { route-record }`  
+The parent of this route if it has one.
+
+#### exp
+`route.exp.test('/users/4')`  
+Returns a regular expression used to test if a path matches this route.  
+
+#### active
+`route.active // true | false`  
+Whether the route is currently active.
+
+#### activate
+`route.activate()`  
+Activates the current route - the equivalent of doing `$router.push(route.path)`. Activate can also be called with an options object in order to specify queries, params, or a hash. If a route has params, it must be called with a params option or it will fail.
+```js
+route.activate();
+// or
+route.activate({ params : { userId : 'foo' }, query : { foo : 'bah' } });
+```
 
 
 ## http
