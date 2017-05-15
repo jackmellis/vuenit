@@ -785,6 +785,40 @@ route.activate();
 route.activate({ params : { userId : 'foo' }, query : { foo : 'bah' } });
 ```
 
+### navigation guards
+The mock router supports vue-router's navigation guards, meaning you can test `router.beforeEach`, `route.beforeEnter`, `route.beforeLeave` and `component.beforeRouteEnter`, `component.beforeRouteUpdate`, `component.beforeRouteLeave` hooks. The hooks are called whenever the route is changed.
+
+*If a route has a component property, the component-level hooks will only be triggered if this property matches the component name. If there is no component property, the component-level hooks will always be called.*
+```js
+// component
+{
+  name : 'test'
+  beforeRouterEnte : sinon.spy()
+}
+// router
+[
+  {
+    path : '/a',
+    component : 'test'
+  },
+  {
+    path : '/b',
+    component : { name : 'foo' }
+  },
+  {
+    path : '/c',
+    component : 'test'
+  }
+]
+
+// test
+c.beforeRouteEnter.called === false
+$router.push('/b');
+c.beforeRouteEnter.called === false
+$router.push('/c');
+c.beforeRouteEnter.calledOnce === true
+```
+
 
 ## http
 `vuenit.http() | vuenit.mockHttp()`  
