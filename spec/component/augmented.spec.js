@@ -90,3 +90,24 @@ test('$create creates a new instance', async function (t) {
   t.is(vm1.propA, 'C');
   t.is(vm2.propA, 'D');
 });
+
+test('does not overwrite existing properties', async function (t) {
+  let {component, options} = t.context;
+  let obj = {};
+  options.install = function (Vue) {
+    Vue.prototype.$name = obj;
+    Vue.prototype.$html = obj;
+    Vue.prototype.$find = obj;
+    Vue.prototype.$findOne = obj;
+    Vue.prototype.$contains = obj;
+    Vue.prototype.$create = obj;
+  };
+  let vm = vuenit.component(component, options);
+
+  t.is(vm.$name, obj);
+  t.is(vm.$html, obj);
+  t.is(vm.$find, obj);
+  t.is(vm.$findOne, obj);
+  t.is(vm.$contains, obj);
+  t.is(vm.$create, obj);
+});
