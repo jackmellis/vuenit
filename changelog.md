@@ -9,6 +9,7 @@
 - If a component instance already has properties for `$name`, `$html`, `$find`, etc., they will not be overwritten with vuenit's properties.
 - `shallow` option can be passed in, which is an alias for setting stubComponents, stubFilters, and stubDirectives to true.
 - Components can also be shallow rendered by calling the new `vuenit.shallow()` method.
+- The `before` option allows you to intercept the component and options just before the component is instantiated, allowing you to spy on component methods or mock computed values, etc.
 
 ## 0.3.1
 - Fixed issues with `stubComponents` option getting transposed by Vue for global components.
