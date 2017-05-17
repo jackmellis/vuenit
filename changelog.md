@@ -5,6 +5,10 @@
 - Improved `$store.when` to accept method types (i.e. *commit/dispatch*) as well as adding `$store.otherwise` method. Also accepts regular expressions to match against: e.g. `$store.when('commit', /MYCOMMIT/).return('value')`.
 - `vuenit.router()` creates a mock version of `$route` and `$router`.
 - Can automatically inject $route and $router into a component with the router option: `{ router : true }`  
+- `stubDirectives` option lets you automatically stub all directives used by a component
+- If a component instance already has properties for `$name`, `$html`, `$find`, etc., they will not be overwritten with vuenit's properties.
+- `shallow` option can be passed in, which is an alias for setting stubComponents, stubFilters, and stubDirectives to true.
+- Components can also be shallow rendered by calling the new `vuenit.shallow()` method.
 
 ## 0.3.1
 - Fixed issues with `stubComponents` option getting transposed by Vue for global components.
