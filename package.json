@@ -1,6 +1,6 @@
 {
   "name": "vuenit",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Vue Unit Test Helpers for server-side testing",
   "main": "lib/index.js",
   "scripts": {
@@ -49,6 +49,7 @@
     "module-alias": "^2.0.0",
     "nyc": "^10.3.2",
     "publish-please": "^2.3.1",
+    "require-extension-hooks": "^0.2.0",
     "sinon": "^2.2.0",
     "vue": "^2.2.6",
     "vuex": "^2.3.1"
