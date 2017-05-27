@@ -78,3 +78,14 @@ test('is called with local injector', function (t) {
   t.not(inj, injector);
   t.true(new inj() instanceof injector);
 });
+
+test('can be set globally', t => {
+  let {component, options, sinon} = t.context;
+  let spy = sinon.spy();
+  delete options.install;
+  vuenit.component.config = { install : spy };
+
+  vuenit.component(component, options);
+
+  t.true(spy.called);
+});
