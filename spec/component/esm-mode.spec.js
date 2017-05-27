@@ -4,7 +4,7 @@ import alias from 'module-alias';
 import hooks from 'require-extension-hooks';
 
 alias.addAlias('vue', 'vue/dist/vue.esm.js');
-debugger;
+
 hooks('js').push(({filename, content}) => {
   if (filename.indexOf('vue.esm.js') < 0){
     return;
@@ -12,6 +12,7 @@ hooks('js').push(({filename, content}) => {
   return content.replace(/export default/, 'exports.default=');
 });
 
-test.failing('is able to use esm build of Vue without configuratoin', t => {
+test('is able to use esm build of Vue without configuration', t => {
   var vuenit = require('../../lib');
+  t.pass();
 });
