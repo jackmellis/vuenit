@@ -7,7 +7,6 @@
     "test": "ava",
     "watch": "ava --watch",
     "coverage": "nyc ava",
-    "debug": "inspect test/index",
     "lint": "eslint lib",
     "publish-please": "publish-please",
     "prepublish": "publish-please guard",
@@ -33,6 +32,7 @@
   },
   "homepage": "https://github.com/jackmellis/vuenit#readme",
   "dependencies": {
+    "mock-http-client": "^0.1.0",
     "path-to-regexp": "^1.7.0",
     "vue-inject": "^1.0.0",
     "vue-template-compiler": "^2.2.6"
@@ -46,7 +46,6 @@
     "browser-env": "^2.0.31",
     "eslint": "^3.19.0",
     "jpex-build-tools": "github:jpex-js/jpex-build-tools",
-    "jpex-mocks": "^2.0.2",
     "module-alias": "^2.0.0",
     "nyc": "^10.3.2",
     "publish-please": "^2.3.1",
