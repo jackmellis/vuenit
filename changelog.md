@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.1
+- Fixed a bug when using `vue/dist/vue.esm.js` (Vue's main entry point) as Vuenit doesn't expect esm syntax.
+
 ## 0.4.0
 - Previously, if prop values were not passed into `options.props`, setting `vm.propsData.unsetprop` would not update the component. This has now been fixed.
 - Improved `$store.when` to accept method types (i.e. *commit/dispatch*) as well as adding `$store.otherwise` method. Also accepts regular expressions to match against: e.g. `$store.when('commit', /MYCOMMIT/).return('value')`.
