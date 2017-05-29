@@ -33,6 +33,7 @@
   "homepage": "https://github.com/jackmellis/vuenit#readme",
   "dependencies": {
     "mock-http-client": "^0.1.0",
+    "mock-vuex": "^0.1.0",
     "path-to-regexp": "^1.7.0",
     "vue-inject": "^1.0.0",
     "vue-template-compiler": "^2.2.6"

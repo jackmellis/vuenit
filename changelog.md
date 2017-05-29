@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.0
+- `vuenit.http` now uses the `mock-http-client` library.
+- `vuenit.store` now uses the `mock-vuex` library.
+- If a mockStore dispatch interceptor throws an error, it is now thrown synchronously.
+
 ## 0.4.2
 - Setting `vuenit.component.config.install` did not work as the install method was being activated before the options had been merged.
 - mock router was using `[].find` method which is not supported in older browsers. Replaced with old reliable for loops.
