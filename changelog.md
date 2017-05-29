@@ -3,6 +3,7 @@
 ## 0.4.2
 - Setting `vuenit.component.config.install` did not work as the install method was being activated before the options had been merged.
 - mock router was using `[].find` method which is not supported in older browsers. Replaced with old reliable for loops.
+- `vuenit.component.config` is now set by default, meaning you can just write `vuenit.component.config.property=value`.
 
 ## 0.4.1
 - Fixed a bug when using `vue/dist/vue.esm.js` (Vue's main entry point) as Vuenit doesn't expect esm syntax.
