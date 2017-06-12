@@ -5,6 +5,7 @@
 - `vuenit.store` now uses the `mock-vuex` library.
 - If a mockStore dispatch interceptor throws an error, it is now thrown synchronously.
 - `vuenit.router` now uses the `mock-vue-router` library.
+- Added a `directives` option so you can stub specific directives.
 
 ## 0.4.2
 - Setting `vuenit.component.config.install` did not work as the install method was being activated before the options had been merged.

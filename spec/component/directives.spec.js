@@ -36,6 +36,24 @@ test.group('directives', function (test) {
   });
 });
 
+test.group('stub directive', function (test) {
+  test('stubs specific directives', function(t){
+    let {sinon, component, options, localDirective, globalDirective} = t.context;
+    let spy1 = sinon.spy(), spy2 = sinon.spy();
+    options.directives = {
+      localDirective : spy1,
+      globalDirective : spy2
+    };
+
+    let vm = vuenit.component(component, options);
+
+    t.false(localDirective.called);
+    t.false(globalDirective.called);
+    t.true(spy1.called);
+    t.true(spy2.called);
+  });
+});
+
 test.group('stubDirectives', function (test) {
   test('stubs all directives', function (t) {
     let {component, options, sinon, localDirective, globalDirective} = t.context;
