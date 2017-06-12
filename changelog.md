@@ -3,7 +3,6 @@
 ## 0.5.0
 - `vuenit.http` now uses the `mock-http-client` library.
 - `vuenit.store` now uses the `mock-vuex` library.
-- If a mockStore dispatch interceptor throws an error, it is now thrown synchronously.
 - `vuenit.router` now uses the `mock-vue-router` library.
 - Added a `directives` option so you can stub specific directives.
 
