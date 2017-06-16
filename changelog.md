@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.6.0
+- Added a `data` option to specify initial data properties.
+
 ## 0.5.0
 - `vuenit.http` now uses the `mock-http-client` library.
 - `vuenit.store` now uses the `mock-vuex` library.
