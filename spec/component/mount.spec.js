@@ -67,21 +67,6 @@ test('throws if no name defined', function (t) {
   t.throws(() => vuenit.component(component, options));
 });
 
-test('creates a global component', function (t) {
-  let {component, options} = t.context;
-  let inst = options.install;
-  options.install = Vue => {
-    Vue.component('my-component', component);
-    inst(Vue);
-  };
-  let vm = vuenit.component('my-component', options);
-  let html = vm.$el.innerHTML;
-
-  t.not(vm, undefined);
-  t.true(html.indexOf('<input type="search"') > -1);
-  t.true(html.indexOf('<code>I am global</code>') > -1);
-});
-
 test('converts template into render', function (t) {
   let {component, options} = t.context;
 
@@ -116,5 +101,41 @@ test.group('component config', function (test) {
 
     t.is(vm.propA, 'Y');
     t.is(vm.propB, 'X');
+  });
+});
+
+test.group('specify vue / injector', test => {
+  test('specifies a specific Vue object', t => {
+    let {component, options, sinon} = t.context;
+    const Vue = require('vue').extend();
+    sinon.spy(Vue, 'use');
+    options.install = function (V) {
+      t.is(Vue, V);
+    };
+    options.Vue = Vue;
+    vuenit.component(component, options);
+    t.true(Vue.use.called);
+  });
+  test('specifies a specific injector', t => {
+    let {component, options} = t.context;
+    const i = injector.spawn();
+    i.constant('foo', 'foo');
+    component.dependencies = ['foo'];
+    options.injector = i;
+
+    const vm = vuenit.component(component, options);
+    t.is(vm.foo, 'foo');
+  });
+  test('if both Vue and injector are specified, the two are not linked together automatically', t => {
+    let {component, options, sinon} = t.context;
+    const Vue = require('vue').extend();
+    const i = injector.spawn();
+    sinon.spy(Vue, 'use');
+    options.Vue = Vue;
+    options.injector = i;
+
+    vuenit.component(component, options);
+
+    t.false(Vue.use.called);
   });
 });

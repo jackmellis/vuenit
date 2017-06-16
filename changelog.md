@@ -1,6 +1,7 @@
 # Changelog
 
 ## 0.6.0
+- Added a `Vue` and `injector` option.
 - Added a `data` option to specify initial data properties.
 
 ## 0.5.0
