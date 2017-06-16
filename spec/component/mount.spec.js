@@ -60,11 +60,19 @@ test('creates a child component', function (t) {
 
   t.not(vm, undefined);
 });
-test('throws if no name defined', function (t) {
+test('sets a default name', function (t) {
   let {component, options} = t.context;
   options.name = null;
 
-  t.throws(() => vuenit.component(component, options));
+  let vm = vuenit.component(component, options);
+  t.truthy(vm.$name);
+  t.is(vm.$name.indexOf('test-component'), 0);
+});
+test('throws if no name defined (global component)', function (t) {
+  let {options} = t.context;
+  options.name = null;
+
+  t.throws(() => vuenit.component('', options));
 });
 
 test('converts template into render', function (t) {

@@ -3,6 +3,7 @@
 ## 0.6.0
 - Added a `Vue` and `injector` option.
 - Added a `data` option to specify initial data properties.
+- Made `component.name` or `options.name` optional, it will just default to a randomly-generated test name.
 
 ## 0.5.0
 - `vuenit.http` now uses the `mock-http-client` library.
