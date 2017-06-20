@@ -1,7 +1,7 @@
 # Changelog
 
 ## 0.6.0
-- #58 Added a `Vue` and `injector` option.
+- [Added a `Vue` and `injector` option](#58)
 - #55 Added a `data` option to specify initial data properties.
 - #62 Made `component.name` or `options.name` optional, it will just default to a randomly-generated test name.
 - #64 Added `vm.$trigger` method.
