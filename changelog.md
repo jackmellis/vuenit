@@ -1,10 +1,10 @@
 # Changelog
 
 ## 0.6.0
-- [Added a `Vue` and `injector` option](#58)
-- #55 Added a `data` option to specify initial data properties.
-- #62 Made `component.name` or `options.name` optional, it will just default to a randomly-generated test name.
-- #64 Added `vm.$trigger` method.
+- Added a `Vue` and `injector` option [58](https://github.com/jackmellis/vuenit/issues/58)
+- Added a `data` option to specify initial data properties [55](https://github.com/jackmellis/vuenit/issues/55)
+- Made `component.name` or `options.name` optional, it will just default to a randomly-generated test name [62](https://github.com/jackmellis/vuenit/issues/62)
+- Added `vm.$trigger` method [64](https://github.com/jackmellis/vuenit/issues/64)
 
 ## 0.5.0
 - `vuenit.http` now uses the `mock-http-client` library.
