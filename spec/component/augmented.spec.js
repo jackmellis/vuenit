@@ -91,6 +91,24 @@ test('$create creates a new instance', async function (t) {
   t.is(vm2.propA, 'D');
 });
 
+test('$trigger simulates a DOM event', t => {
+  let spy = Sinon.spy();
+  let component = {
+    template : '<button @click="onClick">Click Me</button>',
+    methods : {
+      onClick : spy
+    }
+  };
+  let vm = vuenit.component(component);
+
+  t.false(spy.called);
+  t.true(typeof vm.$trigger === 'function');
+
+  vm.$trigger('click');
+
+  t.true(spy.called);
+});
+
 test('does not overwrite existing properties', async function (t) {
   let {component, options} = t.context;
   let obj = {};
