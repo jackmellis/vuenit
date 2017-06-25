@@ -115,13 +115,46 @@ test.group('find component', function (test) {
     t.is(foundC[0].$name, 'componentC');
   });
 
-  test.only('proxies component properties', function (t) {
+  test('proxies component properties', function (t) {
     let {component, options} = t.context;
     let vm = vuenit.component(component, options);
-    debugger;
     let found = vm.$find('componentA');
     t.is(found.$name, 'componentA');
     t.is(found.dataA, 'dataA');
+  });
+  test('has array looping methods', function (t) {
+    let {component, options} = t.context;
+    let vm = vuenit.component(component, options);
+    let found = vm.$find('componentA');
+
+    t.is(found.length, 1);
+    t.true(found.every(c => c.$name === 'componentA'));
+    t.is(found.filter(c => true).length, 1);
+    t.is(found.map(c => c.$name).find(() => true), 'componentA');
+  });
+  test('has push/pop methods', function (t) {
+    let {component, options} = t.context;
+    let vm = vuenit.component(component, options);
+    let found = vm.$find('componentA');
+
+    t.is(found.length, 1);
+    found.push({$name : 'foo'});
+    t.is(found.length, 2);
+    t.is(found[1].$name, 'foo');
+
+    t.is(found.pop().$name, 'foo');
+    t.is(found.length, 1);
+
+    found.unshift({$name : 'bah'});
+    t.is(found.length, 2);
+    t.is(found[0].$name, 'bah');
+
+    t.is(found.shift().$name, 'bah');
+    t.is(found.length, 1);
+
+    found.splice(0, 1, {$name : 'zoo'});
+    t.is(found.length, 1);
+    t.is(found[0].$name, 'zoo');
   });
 
   test('finds a single component', function (t) {
