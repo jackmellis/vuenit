@@ -17,6 +17,11 @@ test.beforeEach(function (t) {
   var componentA = {
     props : ['propValue'],
     components : {componentC},
+    data(){
+      return {
+        dataA : 'dataA'
+      };
+    },
     template : '<component-c :prop-value="propValue"/>'
   };
 
@@ -27,7 +32,8 @@ test.beforeEach(function (t) {
       };
     },
     components : {componentA, componentB},
-    template : `<div>
+    template : `
+    <div>
       <div class="class-a">Class A</div>
       <div id="id-a" class="class-b">Id A</div>
       <component-a :prop-value="dataA"/>
@@ -107,6 +113,15 @@ test.group('find component', function (test) {
     let foundC = found.$find('componentC');
     t.is(foundC.length, 1);
     t.is(foundC[0].$name, 'componentC');
+  });
+
+  test.only('proxies component properties', function (t) {
+    let {component, options} = t.context;
+    let vm = vuenit.component(component, options);
+    debugger;
+    let found = vm.$find('componentA');
+    t.is(found.$name, 'componentA');
+    t.is(found.dataA, 'dataA');
   });
 
   test('finds a single component', function (t) {
