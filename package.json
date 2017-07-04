@@ -1,6 +1,6 @@
 {
   "name": "vuenit",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Vue Unit Test Helpers for server-side testing",
   "main": "lib/index.js",
   "scripts": {
@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/jackmellis/vuenit#readme",
   "dependencies": {
-    "mock-http-client": "^0.1.0",
+    "mock-http-client": "^0.3.1",
     "mock-vue-router": "^0.1.1",
     "mock-vuex": "^0.1.0",
     "vue-inject": "^1.0.0",
@@ -42,13 +42,13 @@
     "vue": "2.x"
   },
   "devDependencies": {
-    "ava": "^0.19.1",
+    "ava": "^0.20.0",
     "ava-spec": "^1.1.0",
-    "browser-env": "^2.0.31",
-    "eslint": "^3.19.0",
+    "browser-env": "^3.0.2",
+    "eslint": "^4.1.1",
     "jpex-build-tools": "github:jpex-js/jpex-build-tools",
     "module-alias": "^2.0.0",
-    "nyc": "^10.3.2",
+    "nyc": "^11.0.3",
     "publish-please": "^2.3.1",
     "require-extension-hooks": "^0.2.0",
     "sinon": "^2.2.0",
