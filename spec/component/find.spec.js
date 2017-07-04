@@ -64,7 +64,6 @@ test.group('find component', function (test) {
     let found = vm.$find('component-a');
 
     t.not(found, undefined);
-    t.true(Array.isArray(found));
     t.is(found.length, 1);
     t.is(found[0].$options.name, 'componentA');
 
@@ -155,17 +154,6 @@ test.group('find component', function (test) {
     found.splice(0, 1, {$name : 'zoo'});
     t.is(found.length, 1);
     t.is(found[0].$name, 'zoo');
-  });
-  test('can concat another array', function (t) {
-    let {component, options} = t.context;
-    let vm = vuenit.component(component, options);
-    let found = vm.$find('componentA');
-
-    let arr = [].concat(found);
-
-    t.is(arr.length, 1);
-    let test = arr[0] === found;
-    t.false(test);
   });
 
   test('finds a single component', function (t) {
