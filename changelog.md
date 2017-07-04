@@ -2,9 +2,12 @@
 
 ## 1.0.0
 - `vm.$find` now returns an array-like object that exposes the first matched item's object. So you can now do `vm.$find('router-link').$html` as well as `vm.$find('router-link')[0].$html`. It still have array-like methods i.e. `vm.$find('router-link').concat([])` and be turned into a *true* array with `vm.$find('router-link').slice()`.[65](https://github.com/jackmellis/vuenit/issues/65)
+- Added `vuenit.build` method, allowing you to create a custom, reusable mount method. [68](https://github.com/jackmellis/vuenit/issues/68)
+- Removed `vm.$create` as this has been superseded by the above `vuenit.build` method. [67](https://github.com/jackmellis/vuenit/issues/67)
 
 ### Breaking Changes
 - As `vm.$find` no longer returns a *true* array, certain operations will no longer work, e.g. `[].concat(vm.$find('...'), vm.$find('...'))` will not concat the results of 2 finds anymore as they are not arrays, you would need to call `.slice()` on them first. `Array.isArray` will also start returning false.
+- Any calls to `vm.$create` will throw a deprecation error. In future releases it will be removed entirely.
 
 ## 0.6.0
 - Added a `Vue` and `injector` option [58](https://github.com/jackmellis/vuenit/issues/58)

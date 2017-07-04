@@ -1,6 +1,6 @@
 {
   "name": "vuenit",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "description": "Vue Unit Test Helpers for server-side testing",
   "main": "lib/index.js",
   "scripts": {
