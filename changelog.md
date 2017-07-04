@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0
+- `vm.$find` now returns an array-like object that exposes the first matched item's object. So you can now do `vm.$find('router-link').$html` as well as `vm.$find('router-link')[0].$html`. It still have array-like methods i.e. `vm.$find('router-link').concat([])` and be turned into a *true* array with `vm.$find('router-link').slice()`.[65](https://github.com/jackmellis/vuenit/issues/65)
+
+### Breaking Changes
+- As `vm.$find` no longer returns a *true* array, certain operations will no longer work, e.g. `[].concat(vm.$find('...'), vm.$find('...'))` will not concat the results of 2 finds anymore as they are not arrays, you would need to call `.slice()` on them first. `Array.isArray` will also start returning false.
+
 ## 0.6.0
 - Added a `Vue` and `injector` option [58](https://github.com/jackmellis/vuenit/issues/58)
 - Added a `data` option to specify initial data properties [55](https://github.com/jackmellis/vuenit/issues/55)
