@@ -6,6 +6,8 @@
 - Removed `vm.$create` as this has been superseded by the above `vuenit.build` method. [67](https://github.com/jackmellis/vuenit/issues/67)
 - When calling `vm.$find` to return html elements (i.e. `vm.$find('button')` or `vm.$findOne('.thingy')`) the element will be augmented with `$html`, `$name`, `$find`, `$contains` etc. [71](https://github.com/jackmellis/vuenit/issues/71)
 - Added `vm.$text` and `foundElement.$text` properties that return the elements text content.
+- If a component template contained no dynamic rendering (just regular html elements with no mustaches, props, etc.) it would fail to render as vuenit was not attaching the static render functions. [73](https://github.com/jackmellis/vuenit/issues/73)
+
 
 ### Breaking Changes
 - As `vm.$find` no longer returns a *true* array, certain operations will no longer work, e.g. `[].concat(vm.$find('...'), vm.$find('...'))` will not concat the results of 2 finds anymore as they are not arrays, you would need to call `.slice()` on them first. `Array.isArray` will also start returning false.
