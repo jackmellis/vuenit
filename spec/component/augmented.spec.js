@@ -104,3 +104,25 @@ test('does not overwrite existing properties', async function (t) {
   t.is(vm.$contains, obj);
   t.is(vm.$create, obj);
 });
+
+test('found elements are augmented too', t => {
+  let {component, options} = t.context;
+  component.template = `<div>
+    <button>
+      <span>
+        <i>{{computedFromProps}}</i>
+      </span>
+    </button>
+  </div>`;
+  let vm = vuenit.component(component, options);
+  let elements = vm.$find('button').slice();
+  t.truthy(elements.length);
+
+  let element = elements[0];
+
+  t.is(element.$html, '<button><span><i>A B</i></span></button>');
+  t.is(element.$name, 'button');
+  t.true(element.$contains('i'));
+  t.is(vm.$find('button').$find('i').$name, 'i');
+  t.is(vm.$find('button').$find('i').$text, 'A B');
+});
