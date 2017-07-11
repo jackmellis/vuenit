@@ -7,11 +7,13 @@
 - When calling `vm.$find` to return html elements (i.e. `vm.$find('button')` or `vm.$findOne('.thingy')`) the element will be augmented with `$html`, `$name`, `$find`, `$contains` etc. [71](https://github.com/jackmellis/vuenit/issues/71)
 - Added `vm.$text` and `foundElement.$text` properties that return the elements text content.
 - If a component template contained no dynamic rendering (just regular html elements with no mustaches, props, etc.) it would fail to render as vuenit was not attaching the static render functions. [73](https://github.com/jackmellis/vuenit/issues/73)
+- `vm.$find`, `vm.$findOne`, `vm.$contains` all now include the root element of a component as part of their search.
 
 
 ### Breaking Changes
 - As `vm.$find` no longer returns a *true* array, certain operations will no longer work, e.g. `[].concat(vm.$find('...'), vm.$find('...'))` will not concat the results of 2 finds anymore as they are not arrays, you would need to call `.slice()` on them first. `Array.isArray` will also start returning false.
 - Any calls to `vm.$create` will throw a deprecation error. In future releases it will be removed entirely.
+- The find methods now include the root element as part of their search, so it possible this will break existing assertions.
 
 ## 0.6.0
 - Added a `Vue` and `injector` option [58](https://github.com/jackmellis/vuenit/issues/58)

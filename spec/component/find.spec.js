@@ -33,7 +33,7 @@ test.beforeEach(function (t) {
     },
     components : {componentA, componentB},
     template : `
-    <div>
+    <div id="root-element">
       <div class="class-a">Class A</div>
       <div id="id-a" class="class-b">Id A</div>
       <component-a :prop-value="dataA"/>
@@ -218,6 +218,13 @@ test.group('find element', function (test) {
     let found = vm.$findOne('.unknown-class');
 
     t.is(found, null);
+  });
+  test('finds root element', t => {
+    let {component, options} = t.context;
+    let vm = vuenit.component(component, options);
+    let found = vm.$find('#root-element');
+
+    t.is(found.length, 1);
   });
 });
 
