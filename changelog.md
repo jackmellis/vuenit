@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.6.1
+- Added a deprecation warning to `vm.$create` as it will be removed in 1.0.0
+
 ## 0.6.0
 - Added a `Vue` and `injector` option [58](https://github.com/jackmellis/vuenit/issues/58)
 - Added a `data` option to specify initial data properties [55](https://github.com/jackmellis/vuenit/issues/55)
