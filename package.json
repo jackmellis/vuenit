@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/jackmellis/vuenit#readme",
   "dependencies": {
+    "inspect-process": "^0.4.2",
     "mock-http-client": "^0.3.1",
     "mock-vue-router": "^0.1.1",
     "mock-vuex": "^0.1.0",
