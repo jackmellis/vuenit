@@ -3,6 +3,7 @@
 ## 1.1.0
 - Slots option now supports scoped slots. The scope is passed in as `props` i.e. `{ slots: { foo: '<span>{{props.bah}}</span>' } }`. [77](https://github.com/jackmellis/vuenit/issues/77)
 - The `on` option now actually passes events into the component render function, rather than just adding them to the instance with `vm.$on`. This makes event testing more realistic (especially when dealing with render functions). [80](https://github.com/jackmellis/vuenit/issues/80)
+- It is now possible to test extended components (rather than just plain object components). `mount(Vue.extend(A).extend(B))` [81](https://github.com/jackmellis/vuenit/issues/81)
 
 ## 1.0.0
 - `vm.$find` now returns an array-like object that exposes the first matched item's object. So you can now do `vm.$find('router-link').$html` as well as `vm.$find('router-link')[0].$html`. It still have array-like methods i.e. `vm.$find('router-link').concat([])` and be turned into a *true* array with `vm.$find('router-link').slice()`.[65](https://github.com/jackmellis/vuenit/issues/65)
