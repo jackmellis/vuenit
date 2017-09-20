@@ -70,7 +70,13 @@ test.group('innerHTML', function (test) {
 test.group('named slots', function (test) {
   function setup(t) {
     let {component, options} = t.context;
-    component.template = `<div><slot name="header"/><slot/><slot name="footer"/></div>`;
+    component.template = `
+      <div>
+        <slot name="header"/><slot/>
+        <slot name="scoped" foo="foo" bah="bah"/>
+        <slot name="footer"/>
+      </div>
+    `;
     options.slots = {};
     return t.context;
   }
@@ -110,12 +116,24 @@ test.group('named slots', function (test) {
 
     t.is(actual, expected);
   });
+  test('creates a component with a scoped slot', function (t) {
+    const {component, options} = setup(t);
+    options.slots = {
+      scoped: '<div><span>{{props.foo}}</span><span>{{props.bah}}</span></div>'
+    };
+    const vm = vuenit.component(component, options);
+
+    const expected = '<div><div><span>foo</span><span>bah</span></div></div>';
+    const actual = vm.$html;
+
+    t.is(actual, expected);
+  });
 });
 
 test.group('default slots', function (test) {
   function setup(t) {
     let {component, options} = t.context;
-    component.template = `<div><slot name="header"/><slot/><slot name="footer"/></div>`;
+    component.template = '<div><slot name="header"/><slot/><slot name="footer"/></div>';
     return t.context;
   }
   test('creates a component with a default slot', function (t) {

@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.0
+- Slots option now supports scoped slots. The scope is passed in as `props` i.e. `{ slots: { foo: '<span>{{props.bah}}</span>' } }`. [77](https://github.com/jackmellis/vuenit/issues/77)
+
 ## 1.0.0
 - `vm.$find` now returns an array-like object that exposes the first matched item's object. So you can now do `vm.$find('router-link').$html` as well as `vm.$find('router-link')[0].$html`. It still have array-like methods i.e. `vm.$find('router-link').concat([])` and be turned into a *true* array with `vm.$find('router-link').slice()`.[65](https://github.com/jackmellis/vuenit/issues/65)
 - Added `vuenit.build` method, allowing you to create a custom, reusable mount method. [68](https://github.com/jackmellis/vuenit/issues/68)
