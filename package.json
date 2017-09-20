@@ -6,6 +6,7 @@
   "scripts": {
     "test": "ava",
     "watch": "ava --watch",
+    "debug": "inspect node_modules/ava/profile",
     "coverage": "nyc ava",
     "lint": "eslint lib",
     "publish-please": "publish-please",
