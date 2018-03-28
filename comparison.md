@@ -24,7 +24,7 @@ t.afterEach(vueUnit.afterEachHooks);
 
 ### vuenit
 ```js
-const vm = vuenit.component(c);
+const vm = vuenit.mount(c);
 ```
 
 ## computed properties
@@ -42,10 +42,14 @@ t.is(vm.computed().foo(), 'foo');
 ???
 
 ### vue-unit
-vanilla
+```js
+t.is(vm.foo, 'foo');
+```
 
 ### vuenit
-vanilla
+```js
+t.is(vm.foo, 'foo');
+```
 
 ## methods
 ### vanilla
@@ -62,10 +66,16 @@ t.is(vm.methods().foo(), 'foo');
 ???
 
 ### vue-unit
-vanilla
+### vanilla
+```js
+t.is(vm.foo(), 'foo');
+```
 
 ### vuenit
-vanilla
+### vanilla
+```js
+t.is(vm.foo(), 'foo');
+```
 
 ## access data
 ### vanilla
@@ -82,10 +92,14 @@ t.is(vm.data().foo, 'foo');
 ???
 
 ### vue-unit
-vanilla
+```js
+t.is(vm.foo, 'foo');
+```
 
 ### vuenit
-vanilla
+```js
+t.is(vm.foo, 'foo');
+```
 
 ## update data
 ### vanilla
@@ -104,10 +118,16 @@ t.is(vm.data().foo, 'bah');
 ???
 
 ### vue-unit
-vanilla
+```js
+vm.foo = 'bah';
+t.is(vm.foo, 'bah');
+```
 
 ### vuenit
-vanilla
+```js
+vm.foo = 'bah';
+t.is(vm.foo, 'bah');
+```
 
 ## set props
 ### vanilla
@@ -165,10 +185,14 @@ t.is(vm.propsData().foo, 'foo');
 ???
 
 ### vue-unit
-vanilla
+```js
+t.is(vm.foo, 'foo');
+```
 
 ### vuenit
-vanilla
+```js
+t.is(vm.foo, 'foo');
+```
 
 ## update props
 ### vanilla
@@ -234,10 +258,14 @@ t.is(vm.name(), 'Foo');
 ```
 
 ### vue-test
-???
+```js
+t.is(vm.$options.name, 'Foo');
+```
 
 ### vue-unit
-vanilla
+```js
+t.is(vm.$options.name, 'Foo');
+```
 
 ### vuenit
 ```js
@@ -261,10 +289,14 @@ vm.trigger('click');
 ```
 
 ### vue-unit
-vanilla
+```js
+vm.$emit('click', {});
+```
 
 ### vuenit
-vanilla
+```js
+vm.$emit('click', {});
+```
 
 ## emit dom events
 ### vanilla
@@ -283,11 +315,13 @@ vm.trigger('click');
 ```
 
 ### vue-unit
-vanilla
+```js
+vm.$el.querySelector('button').dispatchEvent(new Event('click'));
+```
 
 ### vuenit
 ```js
-vuenit.trigger(vm.$find('button'), 'click');
+vm.$find('button').$trigger('click');
 ```
 
 ## listen to events
@@ -303,7 +337,9 @@ vm.$on('customEvent', spy);
 ???
 
 ### vue-unit
-vanilla
+```js
+vm.$on('customEvent', spy);
+```
 
 ### vuenit
 ```js
@@ -334,7 +370,7 @@ vm.find(MyComponent);
 ### vuenit
 ```js
 vm.$find(MyComponent);
-vm.$findOne('myComponent');
+vm.$find('myComponent');
 ```
 
 ## find dom element
@@ -354,12 +390,14 @@ vm.find('.myClass');
 ```
 
 ### vue-unit
-vanilla
+### vanilla
+```js
+vm.$el.querySelector('.myClass');
+```
 
 ### vuenit
 ```js
 vm.$find('.myClass');
-vm.$findOne('.myClass');
 ```
 
 ## contains component
@@ -399,11 +437,13 @@ t.true(vm.contains('.myClass'));
 ```
 
 ### vue-unit
-vanilla
+```js
+t.truthy(vm.$el.querySelector('.myClass'));
+```
 
 ### vuenit
 ```js
-t.true(vm.$contains('myClass'));
+t.true(vm.$contains('.myClass'));
 ```
 
 ## check component attribute
@@ -421,10 +461,14 @@ t.true(vm.hasAttribute('id', 'foo'));
 ???
 
 ### vue-unit
-vanilla
+```js
+t.is(vm.$el.getAttribute('id'), 'foo');
+```
 
 ### vuenit
-vanilla
+```js
+t.is(vm.$el.getAttribute('id'), 'foo');
+```
 
 ## check dom attribute
 ### vanilla
@@ -443,11 +487,13 @@ t.true(vm.find('.myClass')[0].getAttribute('id'), 'foo');
 ```
 
 ### vue-unit
-vanilla
+```js
+t.is(vm.$el.querySelector('.myClass').getAttribute('id'), 'foo');
+```
 
 ### vuenit
 ```js
-t.is(vm.$findOne('.myClass').getAttribute('id'), 'foo');
+t.is(vm.$find('.myClass').getAttribute('id'), 'foo');
 ```
 
 ## check component class
@@ -467,10 +513,14 @@ t.true(vm.hasClass('myClass'));
 ```
 
 ### vue-unit
-vanilla
+```js
+t.true(vm.$el.classList.contains('myClass'));
+```
 
 ### vuenit
-vanilla
+```js
+t.true(vm.$el.classList.contains('myClass'));
+```
 
 ## check dom class
 ### vanilla
@@ -487,11 +537,13 @@ t.true(vm.find('.myClass')[0].hasClass('myClass')); // possibly a redundant test
 ???
 
 ### vue-unit
-vanilla
+```js
+t.true(vm.$el.querySelector('.myClass').classList.contains('myClass'));
+```
 
 ### vuenit
 ```js
-t.true(vm.$findOne('.myClass').classList.contains('myClass'));
+t.true(vm.$find('.myClass').classList.contains('myClass'));
 ```
 
 ## check component style
@@ -509,10 +561,14 @@ t.true(vm.hasStyle('width', '100%'));
 ???
 
 ### vue-unit
-vanilla
+```js
+t.is(vm.$el.style.width, '100%');
+```
 
 ### vuenit
-vanilla
+```js
+t.is(vm.$el.style.width, '100%');
+```
 
 ## check dom style
 ### vanilla
@@ -529,11 +585,14 @@ t.true(vm.find('.myClass').hasStyle('width', '100%'));
 ???
 
 ### vue-unit
-vanilla
+### vanilla
+```js
+t.is(vm.$el.querySelector('.myClass').style.width, '100%');
+```
 
 ### vuenit
 ```js
-t.is(vm.$findOne('.myClass').style.width, '100%');
+t.is(vm.$find('.myClass').style.width, '100%');
 ```
 
 ## check html
@@ -553,7 +612,9 @@ t.is(vm.html(), '<div/>');
 ```
 
 ### vue-unit
-vanilla
+```js
+t.is(vm.$el.outerHTML, '<div/>');
+```
 
 ### vuenit
 ```js
@@ -577,10 +638,14 @@ t.true(vm.matches('div'));
 ```
 
 ### vue-unit
-vanilla
+```js
+t.is(vm.$el.tagName, 'DIV');
+```
 
 ### vuenit
-vanilla
+```js
+t.is(vm.$el.tagName, 'DIV');
+```
 
 
 ## check component is empty
@@ -600,10 +665,14 @@ t.true(vm.isEmpty());
 ```
 
 ### vue-unit
-vanilla
+```js
+t.is(vm.$el.children.length, 0);
+```
 
 ### vuenit
-vanilla
+```js
+t.is(vm.$el.children.length, 0);
+```
 
 ## inject dependencies
 ### vanilla
@@ -656,7 +725,5 @@ var vm = vuenit.component(c, {
 
 ### vuenit
 ```js
-var vm = vuenit.component(c, {
-  stubComponents : true
-});
+var vm = vuenit.shallow(c);
 ```

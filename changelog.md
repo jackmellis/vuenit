@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2
+- Fixed hard dependencies (should be able to work with any version of Vue 2.x.x etc.)
+- Improved `vm.$find` methods to avoid *HTMLElement inheritence* issues.
+
 ## 1.1.1
 - Polyfill `Object.assign`
 
