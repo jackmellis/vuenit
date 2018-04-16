@@ -89,3 +89,18 @@ test('can be set globally', t => {
 
   t.true(spy.called);
 });
+
+test('can set prototype properties', t => {
+  const C = {
+    template: '<div/>',
+    created(){
+      t.is(this.someProperty, 'some value');
+    },
+  };
+
+  vuenit.component(C, {
+    prototype: {
+      someProperty: 'some value',
+    },
+  });
+});

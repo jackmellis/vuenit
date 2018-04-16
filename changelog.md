@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+- Fixed peer dependency
+- Added `prototype` option allowing you to add stuff to the Vue prototype
+- Upgraded `slots` to use `slot-scope` syntax
+
 ## 1.1.2
 - Fixed hard dependencies (should be able to work with any version of Vue 2.x.x etc.)
 - Improved `vm.$find` methods to avoid *HTMLElement inheritence* issues.
